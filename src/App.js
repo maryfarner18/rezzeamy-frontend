@@ -1,13 +1,15 @@
 import React from 'react';
-
-import './App.css';
 import  {withRouter} from 'react-router-dom'
-import Example from './components/Example'
+import './App.css';
+
+import Main from './containers/Nav'
+import Nav from './containers/Main'
 
 function App() {
   return (
     <div className="App">
-      <Example />
+      <Nav />
+      <Main />
     </div>
   );
 }
