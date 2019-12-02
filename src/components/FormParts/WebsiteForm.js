@@ -2,10 +2,11 @@ import React, {Component } from 'react'
 import { Button, Form, Icon } from 'semantic-ui-react'
 
 
-class SkillForm extends Component {
+class WebsiteForm extends Component {
     state = {
-        name: "",
-        proficiency: ""
+        link: "",
+        icon: "",
+        site: ""
     }
 
     handleChange = (e) => {
@@ -16,8 +17,9 @@ class SkillForm extends Component {
 
     saveAndContinue = (e) => {
         e.preventDefault()
-        this.props.setValue("skills", {...this.state})
+        this.props.setValue("websites", {...this.state})
         this.props.nextStep()
+        this.props.submitForm()
     }
 
     goBack = (e) => {
@@ -26,16 +28,20 @@ class SkillForm extends Component {
     }
 
     render() {
-        let index = this.props.skills.length - 1
+        let index = this.props.websites.length - 1
         return (
             <Form onSubmit={this.saveAndContinue}>
                 <Form.Field>
-                    <label>Skill</label>
-                    <input onChange={this.handleChange} value={this.props.skills[index].name} name="name" />
+                    <label>Link</label>
+                    <input onChange={this.handleChange} value={this.props.websites[index].link} name="link"/>
                 </Form.Field>
                 <Form.Field>
-                    <label>Proficiency</label>
-                    <input onChange={this.handleChange} value={this.props.skills[index].proficiency} name="proficiency" />
+                    <label>Icon</label>
+                    <input onChange={this.handleChange} value={this.props.websites[index].icon} name="icon"/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Site</label>
+                    <input onChange={this.handleChange} value={this.props.websites[index].site} name="site" />
                 </Form.Field>
                 <Button onClick={this.goBack}>Back</Button>
                 <Icon name="plus"/>
@@ -45,4 +51,4 @@ class SkillForm extends Component {
     }
 }
 
-export default SkillForm
+export default WebsiteForm

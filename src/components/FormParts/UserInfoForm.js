@@ -3,18 +3,32 @@ import { Button, Form } from 'semantic-ui-react'
 
 
 class UserInfoForm extends Component {
-    state = [
+    state = {
+        username: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        username: "",
+        profile_image: ""
+    }
 
-    ]
-
-    setValue = (e) => {
-        console.log('setting value...')
-        this.props.setValue(e.target.name, e.target.value)
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })   
     }
 
     saveAndContinue = (e) => {
-        console.log("HERE")
         e.preventDefault()
+        this.setState(previousState => ({ 
+            username: (previousState.first_name + previousState.last_name).toLowerCase()
+        }), this.moveOn)
+        
+    }
+
+    moveOn = () => {
+        this.props.setValue('user', {...this.state})
         this.props.nextStep()
     }
 
@@ -23,19 +37,19 @@ class UserInfoForm extends Component {
             <Form onSubmit={this.saveAndContinue}>
                 <Form.Field>
                     <label>First Name</label>
-                    <input onChange={this.setValue} name="first_name" placeholder='First Name' />
+                    <input onChange={this.handleChange} value={this.props.user.first_name} name="first_name" placeholder='First Name' />
                 </Form.Field>
                 <Form.Field>
                     <label>Last Name</label>
-                    <input onChange={this.setValue} name="last_name" placeholder='Last Name' />
+                    <input onChange={this.handleChange} value={this.props.user.last_name} name="last_name" placeholder='Last Name' />
                 </Form.Field>
                 <Form.Field>
                     <label>Email</label>
-                    <input onChange={this.setValue} name="email" placeholder='email address' />
+                    <input onChange={this.handleChange} value={this.props.user.email} name="email" placeholder='email address' />
                 </Form.Field>
                 <Form.Field>
                     <label>Phone</label>
-                    <input onChange={this.setValue} name="phone" placeholder='phone number' />
+                    <input onChange={this.handleChange} value={this.props.user.phone} name="phone" placeholder='phone number' />
                 </Form.Field>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
