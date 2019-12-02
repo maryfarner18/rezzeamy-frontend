@@ -1,13 +1,182 @@
 import React, {Component } from 'react'
+import EducationForm from '../components/FormParts/EducationForm'
+import SkillForm from '../components/FormParts/SkillForm'
+import UserInfoForm from '../components/FormParts/UserInfoForm'
+import WorkExperienceForm from '../components/FormParts/WorkExperienceForm'
+import ProjectForm from '../components/FormParts/ProjectForm'
+import AddressForm from '../components/FormParts/AddressForm'
+import WebsiteForm from '../components/FormParts/WebsiteForm'
+
+import { Icon, Step, Segment } from 'semantic-ui-react'
+
+import $ from 'jquery';
 
 class FormContainer extends Component {
-    state = [
+    state = {
+        step: 1,
+        user: {
+            work_experiences: [{}],
+            skills: [{}],
+            educations: [{}],
+            projects: [{}],
+            websites: [{}],
+            addresses: [{}]
+        },
+    }
 
-    ]
+    submitForm = () =>{
+        console.log("ABOUT TO SUBMIT")
+        console.log(this.state) 
+
+        fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                accepts: "application/json"
+            },
+            body: JSON.stringify(this.state.user)
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log("GOT BACK: ", data)
+        })
+        .catch(err => console.log)
+    }
+
+    setValue = (key, value) =>{
+        if(key === "user"){
+            this.setState({
+                user: {
+                    ...this.state.user,
+                    ...value
+                }
+            })
+        }else{
+            let newArr = [...this.state.user[key]]
+            if(newArr.length === 1 && Object.keys(newArr[0]).length === 0 ){
+                newArr = []
+            }
+            newArr.push(value)
+            this.setState({
+                user: {
+                    ...this.state.user,
+                    [key]: newArr
+                }
+                
+            })
+        }
+    }
+
+    nextStep = () => {
+        let thisStep = this.state.step
+        let nextStep = thisStep + 1
+        $('#'+ nextStep).addClass('active').removeClass("disabled")
+        $('#'+ thisStep).addClass("completed").removeClass("active")
+        this.setState({
+            step: nextStep
+        })
+    }
+
+    prevStep = () => {
+        let thisStep = this.state.step
+        let nextStep = this.state.step - 1
+        $('#'+ nextStep).addClass('active').removeClass("disabled")
+        $('#'+ thisStep).removeClass("active").addClass("disabled")
+        this.setState({
+            step: nextStep
+        })
+    }
+
+    renderForm = () => {
+        switch (this.state.step){
+            case 1:
+                return <UserInfoForm user={this.state.user} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+            case 2:
+                return <AddressForm addresses={this.state.user.addresses} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+            case 3:
+                return <EducationForm education={this.state.user.educations} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+            case 4:
+                return <WorkExperienceForm experiences={this.state.user.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+            case 5:
+                return <SkillForm skills={this.state.user.skills} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+            case 6:
+                return <ProjectForm projects={this.state.user.projects} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+            case 7:
+                return <WebsiteForm websites={this.state.user.websites} submitForm={this.submitForm} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+            case 8:
+                return <div>SUCCESS!</div>
+            default:
+                break; 
+
+        }
+    }
 
     render() {
         return (
-            <div>FORM CONTAINER</div>
+            <React.Fragment>
+            <Step.Group attached="top" widths={7} size='mini'>
+                <Step id="1" active>
+                    <Icon name='user' />
+                    <Step.Content>
+                        <Step.Title>User Info</Step.Title>
+                        <Step.Description>Who Are You?</Step.Description>
+                    </Step.Content>
+                </Step>
+
+                <Step id="2" disabled>
+                    <Icon name='address book' />
+                    <Step.Content>
+                        <Step.Title>Address</Step.Title>
+                        <Step.Description>Where Are You?</Step.Description>
+                    </Step.Content>
+                </Step>
+
+                <Step id="3" disabled>
+                    <Icon name='graduation' />
+                    <Step.Content>
+                        <Step.Title>Education</Step.Title>
+                        <Step.Description>Where You've Learned</Step.Description>
+                    </Step.Content>
+                </Step>
+
+                <Step id="4" disabled>
+                    <Icon name='briefcase' />
+                    <Step.Content>
+                        <Step.Title>Work Experience</Step.Title>
+                        <Step.Description>Where You've Worked</Step.Description>
+                    </Step.Content>
+                </Step>
+
+                <Step  id="5" disabled>
+                    <Icon name='tasks' />
+                    <Step.Content>
+                        <Step.Title>Skills</Step.Title>
+                        <Step.Description>What You're Good At</Step.Description>
+                    </Step.Content>
+                </Step>
+
+                <Step id="6" disabled>
+                    <Icon name='code branch' />
+                    <Step.Content>
+                        <Step.Title>Projects</Step.Title>
+                        <Step.Description>What You've Made</Step.Description>
+                    </Step.Content>
+                </Step>
+
+                <Step id="7" disabled>
+                    <Icon name='globe' />
+                    <Step.Content>
+                        <Step.Title>Websites</Step.Title>
+                        <Step.Description>Where You Post</Step.Description>
+                    </Step.Content>
+                </Step>
+            </Step.Group>
+
+            <Segment attached>
+                {this.renderForm()}
+            </Segment>
+
+            </React.Fragment>
         )
     }
 }
