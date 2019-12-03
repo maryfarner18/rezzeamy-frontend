@@ -1,26 +1,27 @@
 import React, {Component } from 'react'
+import { Route } from 'react-router-dom'
 import ProfileContainer from './ProfileContainer'
 import FormContainer from './FormContainer'
 
 class Main extends Component {
-    state = [
+    state = {
 
-    ]
+    }
 
     renderForm = () =>{
         return <FormContainer/>
     }
 
-    renderProfile= () =>{
-        return <ProfileContainer {...routerProps}/>
+    renderProfile= (routerProps) =>{
+        return <ProfileContainer {...routerProps} />
     }
 
     render() {
         return (
             <div>
-                <Route path="/:username-slug" render={this.renderProfile}/>
+                <Route path="/:username-slug" render={(routerProps) => this.renderProfile(routerProps)}/>
                 <Route path="/setup" render={this.renderForm}/>
-                <Route path="/" render={()=> <div>MAIN BODY</div> }/>
+                <Route exact path="/" render={()=> <div>MAIN BODY</div> }/>
             </div>
             )
     }

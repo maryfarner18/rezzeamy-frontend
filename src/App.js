@@ -2,8 +2,8 @@ import React from 'react';
 import  {withRouter} from 'react-router-dom'
 import './App.css';
 
-import Main from './containers/Nav'
-import Nav from './containers/Main'
+import Main from './containers/Main'
+import Nav from './containers/Nav'
 
 function App() {
   return (
