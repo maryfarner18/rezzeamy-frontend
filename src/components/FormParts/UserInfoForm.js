@@ -7,6 +7,12 @@ class UserInfoForm extends Component {
         this.props.handleChange("user", 0, e.target.name, e.target.value) 
     }
 
+    handleFileChange = (e) => {
+        let stateAccessor = e.target.name
+        let file = e.target.files[0]
+        this.props.handleFileChange(stateAccessor, file)
+    }
+
     saveAndContinue = (e) => {
         e.preventDefault()
         this.props.nextStep()
@@ -33,11 +39,11 @@ class UserInfoForm extends Component {
                 </Form.Field>
                 <Form.Field>
                     <label>Profile ⛏ </label>
-                    <input onChange={this.handleChange} type="file" value={this.props.user.profile_image} name="profile_image" placeholder='phone number' />
+                    <input onChange={this.handleFileChange} type="file" name="profile_image" />
                 </Form.Field>
                 <Form.Field>
                     <label>Resume</label>
-                    <input onChange={this.handleChange} type="file" value={this.props.user.resume} name="resume" placeholder='phone number' />
+                    <input onChange={this.handleFileChange} type="file" name="resume" />
                 </Form.Field>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
