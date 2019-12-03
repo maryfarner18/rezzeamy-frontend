@@ -15,7 +15,7 @@ class FormContainer extends Component {
     state = {
         step: 1,
         form: {
-            user: {first_name: "", last_name: "", email: "", phone: "", username: ""},
+            user: {first_name: "", last_name: "", email: "", phone: "", username: "", resume: "", profile_image: ""},
             work_experiences: [{company: "", title: "", start: "", end:"", city:"", state:""}],
             skills: [{name: "", proficiency: ""}],
             educations: [{university: "", degree: "", concentration: "", start: "", end: ""}],
@@ -23,8 +23,8 @@ class FormContainer extends Component {
             websites: [{link: ""}],
             addresses: [{street1: "", street2: "", city: "", state: "", zip: "", country: ""}]
         },
-        resume: "",
-        profile_image: ""
+        // resume: "",
+        // profile_image: ""
     }
 
     submitForm = () =>{
@@ -51,16 +51,16 @@ class FormContainer extends Component {
             .then(resp => resp.json())
             .then(data => {
                 console.log("GOT BACK: ", data)
-                let userId = data.user.id
-                fetch(`http://localhost:3000/users/${userId}`, {
-                    method: "PATCH",
-                    body: {
-                        profile_image: this.state.profile_image,
-                        resume: this.state.resume
-                    }
-                })
-                .then(resp => resp.json())
-                .then(console.log)
+                // let userId = data.user.id
+                // fetch(`http://localhost:3000/users/${userId}`, {
+                //     method: "PATCH",
+                //     body: {
+                //         profile_image: this.state.profile_image,
+                //         resume: this.state.resume
+                //     }
+                // })
+                // .then(resp => resp.json())
+                // .then(console.log)
             })
             .catch(console.log)
 

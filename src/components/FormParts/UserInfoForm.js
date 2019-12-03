@@ -39,11 +39,11 @@ class UserInfoForm extends Component {
                 </Form.Field>
                 <Form.Field>
                     <label>Profile ⛏ </label>
-                    <input onChange={this.handleFileChange} type="file" name="profile_image" accept="image/*"/>
+                    <input onChange={this.handleChange} type="file" name="profile_image" accept="image/*"/>
                 </Form.Field>
                 <Form.Field>
                     <label>Resume</label>
-                    <input onChange={this.handleFileChange} type="file" name="resume" accept="application/pdf"/>
+                    <input onChange={this.handleChange} type="file" name="resume" accept="application/pdf"/>
                 </Form.Field>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
