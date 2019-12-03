@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import {Route, withRouter} from 'react-router-dom'
-
 import ProfileContainer from './ProfileContainer'
 import Landing from './Landing'
 import UhOh404 from '../components/UhOh404'
 import FormContainer from './FormContainer'
+
+import SignUp from './SignUp'
+import { BrowserRouter, Switch, Route, withRouter } from 'react-router-dom'
 
 class Main extends Component {
 
@@ -14,13 +15,15 @@ class Main extends Component {
     }
 
     renderProfile= () =>{
-        console.log("rendering profile")
-        return <ProfileContainer currentUser={this.props.currentUser}/>
+      return <ProfileContainer currentUser={this.props.user} />
     }
-
+      
+    renderSignUp = () =>{
+        return <SignUp currentUser={this.props.user} setUser={this.props.setUser} handleLogin={this.props.handleLogin}/>      
+    }
+    
     renderLanding = () =>{
-        console.log("rendering landing")
-        return <Landing currentUser={this.props.user} setUser={this.props.setUser}/>
+        return <Landing currentUser={this.props.user} setUser={this.props.setUser} handleLogin={this.props.handleLogin}/>
     }
     
     renderNotFound = () =>{
@@ -31,12 +34,17 @@ class Main extends Component {
     render() {
         return (
             <div>
-                <Route exact path="/setup" render={this.renderForm}/>
-                <Route exact path="/" render={this.renderLanding }/>
-                <Route path="/:username" render={this.renderProfile}/>
-                <Route render={this.renderNotFound}/>
+                <BrowserRouter>
+                    <Switch>
+                        <Route path="/:username-slug" render={this.renderProfile}/>
+                        <Route exact path="/setup" render={this.renderForm}/>
+                        <Route exact path="/" render={this.renderLanding }/>
+                        <Route exact path="/signup" render={this.renderSignUp }/>
+                        <Route render={this.renderNotFound}/>
+                    </Switch>
+                </BrowserRouter>
             </div>
-            )
+        )
     }
 }
 
