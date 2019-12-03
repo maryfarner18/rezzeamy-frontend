@@ -7,15 +7,15 @@ import {Route} from 'react-router-dom'
 class Main extends Component {
 
     renderForm = () =>{
-        return <FormContainer/>
+        return <FormContainer currentUser={this.props.user} setUser={this.props.setUser}/>
     }
 
     renderProfile= () =>{
-        return <ProfileContainer/>
+        return <ProfileContainer currentUser={this.props.user}/>
     }
 
     renderLanding = () =>{
-        return <Landing/>
+        return <Landing currentUser={this.props.user} setUser={this.props.setUser}/>
     }
 
     render() {
