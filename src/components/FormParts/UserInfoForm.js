@@ -13,7 +13,6 @@ class UserInfoForm extends Component {
     }
 
     render() {
-        console.log("user info props = ", this.props)
         return (
             <Form onSubmit={this.saveAndContinue}>
                 <Form.Field>

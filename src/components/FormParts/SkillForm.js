@@ -18,6 +18,10 @@ class SkillForm extends Component {
         this.props.prevStep();
     }
 
+    add = (e) => {
+        this.props.addMore("skills")
+    }
+
     render() {
         let index = this.props.skills.length - 1
         return (
@@ -30,8 +34,10 @@ class SkillForm extends Component {
                     <label>Proficiency</label>
                     <input onChange={this.handleChange} value={this.props.skills[index].proficiency} name="proficiency" />
                 </Form.Field>
+                <br></br>
+                <Icon onClick={this.props.addMore} name="plus"/>
+                <br></br>
                 <Button onClick={this.goBack}>Back</Button>
-                <Icon name="plus"/>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
         )

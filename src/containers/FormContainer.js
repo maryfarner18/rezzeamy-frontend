@@ -14,11 +14,8 @@ import $ from 'jquery';
 class FormContainer extends Component {
     state = {
         step: 1,
-        user: {
-            first_name: "",
-            last_name: "",
-            email: "",
-            phone: "",
+        form: {
+            user: {first_name: "", last_name: "", email: "", phone: "", username: ""},
             work_experiences: [{company: "", title: "", start: "", end:"", city:"", state:""}],
             skills: [{name: "", proficiency: ""}],
             educations: [{university: "", degree: "", concentration: "", start: "", end: ""}],
@@ -30,7 +27,13 @@ class FormContainer extends Component {
 
     submitForm = () =>{
         this.setState(previousState => ({ 
-            username: (previousState.user.first_name + previousState.user.last_name).toLowerCase()
+            form: {
+                ...this.state.form,
+                user: {
+                    ...this.state.form.user,
+                    username: (previousState.form.user.first_name + previousState.form.user.last_name).toLowerCase()
+                }
+            }  
         }), () => {
             console.log("ABOUT TO SUBMIT")
             console.log(this.state) 
@@ -41,45 +44,48 @@ class FormContainer extends Component {
                     "content-type": "application/json",
                     accepts: "application/json"
                 },
-                body: JSON.stringify(this.state.user)
+                body: JSON.stringify(this.state.form)
             })
             .then(resp => resp.json())
             .then(data => {
                 console.log("GOT BACK: ", data)
             })
-            .catch(err => console.log)
+            .catch(console.log)
 
         })
     }
 
-    addMore = (key) => {
-        this.setState({
-            user: {
-                ...this.state.user,
-                [key]: this.state.user.key.push({})
-            }
-        })
-    }
-
-    // setValue = (key, value) =>{
     handleChange = (key, index, subkey, value) => {
         if(key === "user"){
             this.setState({
-                user: {
-                    ...this.state.user,
-                    [subkey]: value
+                form: {
+                    ...this.state.form,
+                    user: {
+                        ...this.state.form.user,
+                        [subkey]: value
+                    }
                 }
             })
+
         }else{
-            let newArr = [...this.state.user[key]]
+            let newArr = [...this.state.form[key]]
             newArr[index] = Object.assign(newArr[index], {[subkey]: value})
             this.setState({
-                user: {
-                    ...this.state.user,
+                form: {
+                    ...this.state.form,
                     [key]: [...newArr]
                 } 
             })
         }
+    }
+
+    addMore = (key) => {
+        this.setState({
+            form: {
+                ...this.state.form,
+                [key]: this.state.form.key.push({})
+            }
+        })
     }
 
     nextStep = () => {
@@ -105,19 +111,19 @@ class FormContainer extends Component {
     renderForm = () => {
         switch (this.state.step){
             case 1:
-                return <UserInfoForm user={this.state.user} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <UserInfoForm user={this.state.form.user} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 2:
-                return <AddressForm submitForm={this.submitForm} addresses={this.state.user.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <AddressForm submitForm={this.submitForm} addresses={this.state.form.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 3:
-                return <EducationForm education={this.state.user.educations} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <EducationForm education={this.state.form.educations} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
             case 4:
-                return <WorkExperienceForm experiences={this.state.user.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <WorkExperienceForm experiences={this.state.form.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
             case 5:
-                return <SkillForm skills={this.state.user.skills} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <SkillForm skills={this.state.form.skills} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
             case 6:
-                return <ProjectForm projects={this.state.user.projects} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <ProjectForm projects={this.state.form.projects} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
             case 7:
-                return <WebsiteForm websites={this.state.user.websites} submitForm={this.submitForm} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <WebsiteForm websites={this.state.form.websites} submitForm={this.submitForm} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
             case 8:
                 return <div>SUCCESS!</div>
             default:
