@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { Divider, Form } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 
 export class Login extends Component {
 
