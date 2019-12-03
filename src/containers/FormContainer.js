@@ -7,20 +7,30 @@ import ProjectForm from '../components/FormParts/ProjectForm'
 import AddressForm from '../components/FormParts/AddressForm'
 import WebsiteForm from '../components/FormParts/WebsiteForm'
 
-import { Icon, Step, Segment } from 'semantic-ui-react'
+import {NavLink} from 'react-router-dom'
+import { Icon, Step, Segment, Form, Message } from 'semantic-ui-react'
 
 import $ from 'jquery';
+
+const FIELD_OBJ = {
+    educations: {university: "", degree: "", concentration: "", start: "", end: ""},
+    websites: {link: ""},
+    skills: {name: "", proficiency: ""},
+    projects: {title: "", link: ""},
+    work_experiences: {company: "", title: "", start: "", end:"", city:"", state:""},
+}
 
 class FormContainer extends Component {
     state = {
         step: 1,
         form: {
+
             user: {first_name: "", last_name: "", email: "", phone: "", username: "", resume: "", profile_image: ""},
-            work_experiences: [{company: "", title: "", start: "", end:"", city:"", state:""}],
-            skills: [{name: "", proficiency: ""}],
-            educations: [{university: "", degree: "", concentration: "", start: "", end: ""}],
-            projects: [{title: "", link: ""}],
-            websites: [{link: ""}],
+            work_experiences: [{...FIELD_OBJ.work_experiences}],
+            skills: [{...FIELD_OBJ.skills}],
+            educations: [{...FIELD_OBJ.educations}],
+            projects: [{...FIELD_OBJ.projects}],
+            websites: [{...FIELD_OBJ.websites}],
             addresses: [{street1: "", street2: "", city: "", state: "", zip: "", country: ""}]
         },
         // resume: "",
@@ -67,12 +77,12 @@ class FormContainer extends Component {
         })
     }
 
-    handleFileChange = (accessor, value) => {
-        this.setState({
-            [accessor]: value
-        }
-        )
-    }
+//     handleFileChange = (accessor, value) => {
+//         this.setState({
+//             [accessor]: value
+//         }
+//         )
+//     }
 
     handleChange = (key, index, subkey, value) => {
         if(key === "user"){
@@ -99,10 +109,11 @@ class FormContainer extends Component {
     }
 
     addMore = (key) => {
+   
         this.setState({
             form: {
                 ...this.state.form,
-                [key]: this.state.form.key.push({})
+                [key]: [...this.state.form[key], {...FIELD_OBJ[key]}]
             }
         })
     }
@@ -144,7 +155,10 @@ class FormContainer extends Component {
             case 7:
                 return <WebsiteForm websites={this.state.form.websites} submitForm={this.submitForm} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
             case 8:
-                return <div>SUCCESS!</div>
+                return <Form success>
+                            <Message success header='Form Completed' content="You're all set!"/>
+                            <NavLink to={`/${this.state.form.user.username}`}>Go To Your Page!</NavLink>
+                        </Form>
             default:
                 break; 
 

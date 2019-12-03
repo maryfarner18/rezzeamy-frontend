@@ -34,9 +34,8 @@ class SkillForm extends Component {
                     <label>Proficiency</label>
                     <input onChange={this.handleChange} value={this.props.skills[index].proficiency} name="proficiency" />
                 </Form.Field>
-                <br></br>
-                <Icon onClick={this.props.addMore} name="plus"/>
-                <br></br>
+                <Icon size='large' onClick={this.addMore} name="plus"/>
+                <br></br><br></br>
                 <Button onClick={this.goBack}>Back</Button>
                 <Button type='submit'>Save & Continue</Button>
             </Form>

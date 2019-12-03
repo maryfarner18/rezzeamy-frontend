@@ -13,13 +13,12 @@ class ProjectForm extends Component {
     
     }
 
-
     goBack = (e) => {
         e.preventDefault();
         this.props.prevStep();
     }
 
-    add = (e) => {
+    addMore = (e) => {
         this.props.addMore("projects")
     }
 
@@ -35,11 +34,9 @@ class ProjectForm extends Component {
                     <label>Link</label>
                     <input onChange={this.handleChange} value={this.props.projects[index].link} name="link"/>
                 </Form.Field>
-                <br></br>
-                <Icon onClick={this.props.addMore} name="plus"/>
-                <br></br>
+                <Icon size='large' onClick={this.addMore} name="plus"/>
+                <br></br><br></br>
                 <Button onClick={this.goBack}>Back</Button>
-                <Icon name="plus"/>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
         )

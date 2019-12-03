@@ -18,7 +18,7 @@ class WorkExperienceForm extends Component {
         this.props.prevStep();
     }
 
-    add = (e) => {
+    addMore = (e) => {
         this.props.addMore("work_experiences")
     }
 
@@ -54,9 +54,8 @@ class WorkExperienceForm extends Component {
                     <label>End</label>
                     <input onChange={this.handleChange} value={this.props.experiences[index].end} name="end" />
                 </Form.Field>
-                <br></br>
-                <Icon onClick={this.props.addMore} name="plus"/>
-                <br></br>
+                <Icon size='large' onClick={this.addMore} name="plus"/>
+                <br></br><br></br>
                 <Button onClick={this.goBack}>Back</Button>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
