@@ -35,11 +35,9 @@ class ProjectForm extends Component {
                     <label>Link</label>
                     <input onChange={this.handleChange} value={this.props.projects[index].link} name="link"/>
                 </Form.Field>
-                <br></br>
-                <Icon onClick={this.props.addMore} name="plus"/>
+                <Icon size='big' onClick={this.props.addMore} name="plus"/>
                 <br></br>
                 <Button onClick={this.goBack}>Back</Button>
-                <Icon name="plus"/>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
         )

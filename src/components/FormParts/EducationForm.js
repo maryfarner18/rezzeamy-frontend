@@ -46,8 +46,7 @@ class EducationForm extends Component {
                     <label>End</label>
                     <input onChange={this.handleChange} value={this.props.education[index].end} name="end" />
                 </Form.Field>
-                <br></br>
-                <Icon onClick={this.props.addMore} name="plus"/>
+                <Icon size='big' onClick={this.props.addMore} name="plus"/>
                 <br></br>
                 <Button onClick={this.goBack}>Back</Button>
                 <Button type='submit'>Save & Continue</Button>
