@@ -20,8 +20,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
-        <Main currentUser={this.state.user} setUser={this.setUser}/>
+        <Nav currentUser={this.state.user} setUser={this.setUser} />
+        <Main currentUser={this.state.user} setUser={this.setUser} />
       </div>
     );
   }
