@@ -15,7 +15,7 @@ class FormContainer extends Component {
     state = {
         step: 1,
         form: {
-            user: {first_name: "", last_name: "", email: "", phone: "", username: "", resume: "", profile_image:""},
+            user: {first_name: "", last_name: "", email: "", phone: "", username: ""},
             work_experiences: [{company: "", title: "", start: "", end:"", city:"", state:""}],
             skills: [{name: "", proficiency: ""}],
             educations: [{university: "", degree: "", concentration: "", start: "", end: ""}],
@@ -23,6 +23,8 @@ class FormContainer extends Component {
             websites: [{link: ""}],
             addresses: [{street1: "", street2: "", city: "", state: "", zip: "", country: ""}]
         },
+        resume: "",
+        profile_image: ""
     }
 
     submitForm = () =>{
@@ -49,10 +51,18 @@ class FormContainer extends Component {
             .then(resp => resp.json())
             .then(data => {
                 console.log("GOT BACK: ", data)
+                // working on this
             })
             .catch(console.log)
 
         })
+    }
+
+    handleFileChange = (accessor, value) => {
+        this.setState({
+            [accessor]: value
+        }
+        )
     }
 
     handleChange = (key, index, subkey, value) => {
@@ -111,7 +121,7 @@ class FormContainer extends Component {
     renderForm = () => {
         switch (this.state.step){
             case 1:
-                return <UserInfoForm user={this.state.form.user} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <UserInfoForm user={this.state.form.user} profileImage={this.state.profile_image} resume={this.state.resume} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
             case 2:
                 return <AddressForm submitForm={this.submitForm} addresses={this.state.form.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 3:
