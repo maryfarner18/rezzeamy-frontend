@@ -19,7 +19,7 @@ const FIELD_OBJ = {
     websites: {link: ""},
     skills: {name: "", proficiency: ""},
     projects: {title: "", link: ""},
-    work_experiences: {company: "", title: "", start: "", end:"", city:"", state:""},
+    work_experiences: {company: "", title: "", description: "", start: "", end:"", city:"", state:""},
 }
 
 class FormContainer extends Component {
@@ -47,9 +47,7 @@ class FormContainer extends Component {
                 }
             }  
         }), () => {
-            console.log("ABOUT TO SUBMIT")
-            console.log(this.state) 
-    
+
             fetch("http://localhost:3000/users", {
                 method: "POST",
                 headers: {
@@ -65,6 +63,7 @@ class FormContainer extends Component {
                     console.log("setting username in app to ", data.user.username)
                     this.props.setUser(data.user.username)
                 }
+                this.nextStep()
                 // let userId = data.user.id
                 // fetch(`http://localhost:3000/users/${userId}`, {
                 //     method: "PATCH",
@@ -166,7 +165,6 @@ class FormContainer extends Component {
     }
 
     render() {
-        console.log("state on render = ", this.state )
         return (
             <React.Fragment>
             <Step.Group attached="top" widths={7} size='mini'>

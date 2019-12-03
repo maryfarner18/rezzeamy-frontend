@@ -9,8 +9,8 @@ class WebsiteForm extends Component {
 
     saveAndContinue = (e) => {
         e.preventDefault()
-        this.props.nextStep()
         this.props.submitForm()
+       // this.props.nextStep()
     
     }
 
