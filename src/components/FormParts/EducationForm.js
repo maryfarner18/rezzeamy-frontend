@@ -18,7 +18,7 @@ class EducationForm extends Component {
         this.props.prevStep();
     }
 
-    add = (e) => {
+    addMore = (e) => {
         this.props.addMore("educations")
     }
 
@@ -46,8 +46,8 @@ class EducationForm extends Component {
                     <label>End</label>
                     <input onChange={this.handleChange} value={this.props.education[index].end} name="end" />
                 </Form.Field>
-                <Icon size='big' onClick={this.props.addMore} name="plus"/>
-                <br></br>
+                <Icon size='large' onClick={this.addMore} name="plus"/>
+                <br></br><br></br>
                 <Button onClick={this.goBack}>Back</Button>
                 <Button type='submit'>Save & Continue</Button>
             </Form>

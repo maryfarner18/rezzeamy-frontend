@@ -55,7 +55,6 @@ class AddressForm extends Component {
                     <input onChange={this.handleChange} value={this.props.addresses[index].country} name="country" />
                 </Form.Field>
                 <Button onClick={this.goBack}>Back</Button>
-                <Icon onClick={this.addMore} name="plus"/>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
         )

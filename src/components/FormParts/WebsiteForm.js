@@ -19,7 +19,7 @@ class WebsiteForm extends Component {
         this.props.prevStep();
     }
 
-    add = (e) => {
+    addMore = (e) => {
         this.props.addMore("websites")
     }
 
@@ -31,10 +31,10 @@ class WebsiteForm extends Component {
                     <label>Link</label>
                     <input onChange={this.handleChange} value={this.props.websites[index].link} name="link"/>
                 </Form.Field>
-                <Button onClick={this.props.addMore}><Icon size='large' name="plus"/></Button>
-                <br></br>
+                <Icon size='large' onClick={this.addMore} name="plus"/>
+                <br></br><br></br>
                 <Button onClick={this.goBack}>Back</Button>
-                <Button type='submit'>Save & Continue</Button>
+                <Button type='submit'>Save & Finish!</Button>
             </Form>
         )
     }
