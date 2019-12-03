@@ -5,13 +5,26 @@ import  {withRouter} from 'react-router-dom'
 import Main from './containers/Main'
 import Nav from './containers/Nav'
 
-function App() {
-  return (
-    <div>
-      <Nav />
-      <Main />
-    </div>
-  );
+class App extends React.Component {
+  
+  state = {
+    user: ""
+  }
+
+  setUser = (username) => {
+    this.setState({
+      user: username
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <Nav />
+        <Main currentUser={this.state.user} setUser={this.setUser}/>
+      </div>
+    );
+  }
 }
 
 export default withRouter(App); // higher order component
