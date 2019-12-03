@@ -1,5 +1,5 @@
-import React, {Component } from 'react'
-import { Container, Grid, Segment, Header, Card } from 'semantic-ui-react'
+import React from 'react'
+import { Container, Header } from 'semantic-ui-react'
 
 const About = (props) => {
 

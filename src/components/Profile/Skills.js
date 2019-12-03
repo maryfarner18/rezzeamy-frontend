@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Divider, Header, Grid, Card } from 'semantic-ui-react'
 
 const Skills = (props) => {
@@ -12,8 +12,8 @@ const Skills = (props) => {
                 <Grid.Row columns={props.skills.length}>
                     {props.skills.map(skill => {
                         return (
-                            <Grid.Column>
-                                <div class='ui centered card'>
+                            <Grid.Column key={skill.id}>
+                                <div className='ui centered card'>
                                     <Card>
                                         <Card.Content>
                                             <Card.Header>{skill.name}</Card.Header>

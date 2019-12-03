@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Divider, Header, Grid, Card } from 'semantic-ui-react'
+import React from 'react'
+import { Divider, Header } from 'semantic-ui-react'
 
 const Education = (props) => {
 
@@ -10,7 +10,7 @@ const Education = (props) => {
             </Divider>
             {props.education.map(education => {
                 return (
-                    <div style={{marginBottom: 50}}>
+                    <div style={{marginBottom: 50}} key={education.id}>
                         <Header as='h3'>{education.university}</Header>
                         <p>Degree: {education.degree}</p>
                         <p>Concentration: {education.concentration}</p>

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Divider, Header, Card, Grid } from 'semantic-ui-react'
+import React from 'react'
+import { Divider, Header, Grid } from 'semantic-ui-react'
 
 const WorkExperience = (props) => {
 
@@ -13,7 +13,7 @@ const WorkExperience = (props) => {
                 <Grid.Row columns={props.about.length}>
                     {props.about.map(exp => {
                         return (
-                            <Grid.Column>
+                            <Grid.Column key={exp.id}>
                                 <Header as='h3'>{exp.company}</Header>
                                 <Header as='h4'>Start Date: {exp.start} / End Date: {exp.end}</Header>
                                 <p>Location: {exp.city}, {exp.state}</p>

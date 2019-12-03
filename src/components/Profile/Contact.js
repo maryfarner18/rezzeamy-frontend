@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const Contact = (props) => {
 
     return (
-        <React.Fragment style={{marginTop: 50}}>
+        <div style={{marginTop: 50}}>
             {props.resources.map(site => {
-                return <a href={site.link} style={{margin: 10}}>{site.site}</a>
+                return <a key={site.id} href={site.link} style={{margin: 10}}>{site.site}</a>
             })}
             {props.addresses.map(address => {
-                return <p>{address.street1} {address.street2 ? address.street2 : null} {address.city}, {address.state} {address.zip}, {address.country}</p>
+                return <p key={address.id} >{address.street1} {address.street2 ? address.street2 : null} {address.city}, {address.state} {address.zip}, {address.country}</p>
             })}
-        </React.Fragment>
+        </div>
     )
 
 }

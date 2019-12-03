@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Divider, Header, Grid, Card } from 'semantic-ui-react'
+import React from 'react'
+import { Divider, Header } from 'semantic-ui-react'
 
 const Projects = (props) => {
 
@@ -10,11 +10,11 @@ const Projects = (props) => {
             </Divider>
             {props.projects.map(project => {
                 return (
-                    <div style={{marginBottom: 50}}>
+                    <div style={{marginBottom: 50}} key={project.id}>
                         <Header as='h3'>{project.title}</Header>
                         <p>{project.description}</p>
                         <p>{project.link}</p>
-                        <img src={project.image} alt="Project image" />
+                        <img src={project.image} alt="Project" />
                     </div>
                 )
             })}
