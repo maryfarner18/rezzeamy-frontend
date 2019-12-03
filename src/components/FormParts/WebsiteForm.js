@@ -31,8 +31,7 @@ class WebsiteForm extends Component {
                     <label>Link</label>
                     <input onChange={this.handleChange} value={this.props.websites[index].link} name="link"/>
                 </Form.Field>
-                <br></br>
-                <Icon onClick={this.props.addMore} name="plus"/>
+                <Button onClick={this.props.addMore}><Icon size='large' name="plus"/></Button>
                 <br></br>
                 <Button onClick={this.goBack}>Back</Button>
                 <Button type='submit'>Save & Continue</Button>
