@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Divider, Form } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 
 class Login extends PureComponent {
     constructor(props) {

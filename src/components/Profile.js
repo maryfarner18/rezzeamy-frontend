@@ -7,37 +7,38 @@ import Projects from '../components/Profile/Projects'
 import WorkExperience from '../components/Profile/WorkExperience'
 
 
+
 export default class Profile extends Component {
 
     renderAboutComponent = () => {
         return <About 
-                    firstName={user_profile.user.first_name} 
-                    lastName={user_profile.user.last_name} 
-                    email={user_profile.user.email} 
-                    phone={user_profile.user.phone} 
+                    firstName={this.props.currentUser.first_name} 
+                    lastName={this.props.currentUser.last_name} 
+                    email={this.props.currentUser.email} 
+                    phone={this.props.currentUser.phone} 
                 />
     }
 
     renderWorkExperienceComponent = () => {
-        return <WorkExperience about={user_profile.user.work_experiences} />
+        return <WorkExperience about={this.props.currentUser.work_experiences} />
     }
 
     renderSkillsComponent = () => {
-        return <Skills skills={user_profile.user.skills} />
+        return <Skills skills={this.props.currentUser.skills} />
     }
 
     renderEducationComponent = () => {
-        return <Education education={user_profile.user.education} />
+        return <Education education={this.props.currentUser.education} />
     }
 
     renderProjectsComponent = () => {
-        return <Projects projects={user_profile.user.projects} />
+        return <Projects projects={this.props.currentUser.projects} />
     }
 
     renderContactComponent = () => {
         return <Contact 
-                    resources={user_profile.user.websites} 
-                    addresses={user_profile.user.addresses} 
+                    resources={this.props.currentUser.websites} 
+                    addresses={this.props.currentUser.addresses} 
                 />
     }
 
@@ -55,6 +56,7 @@ export default class Profile extends Component {
     }
 
     render() {
+        console.log("in profile, props are ", this.props)
         return (
             this.renderChildComponents()
         )

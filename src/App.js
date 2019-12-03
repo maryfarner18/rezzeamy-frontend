@@ -7,18 +7,16 @@ import Nav from './containers/Nav'
 class App extends React.Component {
   
   state = {
-    user: ""
+    user: null
   }
 
-  setUser = (username) => {
+  setUser = (user) => {
     this.setState({
-      user: username
+      user: {...user}
     })
   }
 
   render() {
-    console.log("App state = ", this.state)
-    console.log("Sending down ", this.state.user)
     return (
       <div>
         <Nav />

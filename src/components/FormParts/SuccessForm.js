@@ -7,7 +7,7 @@ function SuccessForm(props) {
     return (
         <Form success>
             <Message success header='Form Completed' content="You're all set!"/>
-            <NavLink to={`/${props.currentUser}`}>Go To Your Page!</NavLink>
+            <NavLink to={`/${props.currentUsername}`}>Go To Your Page!</NavLink>
         </Form>
     )
 }
