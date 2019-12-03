@@ -31,6 +31,14 @@ class UserInfoForm extends Component {
                     <label>Phone</label>
                     <input onChange={this.handleChange} type="text" value={this.props.user.phone} name="phone" placeholder='phone number' />
                 </Form.Field>
+                <Form.Field>
+                    <label>Profile ⛏ </label>
+                    <input onChange={this.handleChange} type="file" value={this.props.user.profile_image} name="profile_image" placeholder='phone number' />
+                </Form.Field>
+                <Form.Field>
+                    <label>Resume</label>
+                    <input onChange={this.handleChange} type="file" value={this.props.user.resume} name="resume" placeholder='phone number' />
+                </Form.Field>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
         )

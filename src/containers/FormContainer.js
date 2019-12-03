@@ -15,7 +15,7 @@ class FormContainer extends Component {
     state = {
         step: 1,
         form: {
-            user: {first_name: "", last_name: "", email: "", phone: "", username: ""},
+            user: {first_name: "", last_name: "", email: "", phone: "", username: "", resume: "", profile_image:""},
             work_experiences: [{company: "", title: "", start: "", end:"", city:"", state:""}],
             skills: [{name: "", proficiency: ""}],
             educations: [{university: "", degree: "", concentration: "", start: "", end: ""}],
