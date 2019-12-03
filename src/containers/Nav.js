@@ -60,11 +60,13 @@ class Nav extends Component {
                         </Menu.Item>
                         <Menu.Menu position='right'>
                             <Menu.Item
-                            as={Link} to='/'
-                            name='login'
-                            active={activeItem === 'login'}
+                            as={Link} to='/signup'
+                            name='signup'
+                            active={activeItem === 'signup'}
                             onClick={this.handleItemClick}
-                            />
+                            >
+                                Sign Up!
+                            </Menu.Item>
                         </Menu.Menu>
                     </Fragment>
                 }

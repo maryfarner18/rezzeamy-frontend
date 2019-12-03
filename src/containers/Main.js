@@ -2,7 +2,8 @@ import React, {Component } from 'react'
 import ProfileContainer from './ProfileContainer'
 import Landing from './Landing'
 import FormContainer from './FormContainer'
-import {Route} from 'react-router-dom'
+import SignUp from './SignUp'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 class Main extends Component {
 
@@ -11,21 +12,30 @@ class Main extends Component {
     }
 
     renderProfile= () =>{
-        return <ProfileContainer currentUser={this.props.user}/>
+        return <ProfileContainer currentUser={this.props.user} />
     }
 
     renderLanding = () =>{
-        return <Landing currentUser={this.props.user} setUser={this.props.setUser}/>
+        return <Landing currentUser={this.props.user} setUser={this.props.setUser} handleLogin={this.props.handleLogin}/>
+    }
+
+    renderSignUp = () =>{
+        return <SignUp currentUser={this.props.user} setUser={this.props.setUser} handleLogin={this.props.handleLogin}/>
     }
 
     render() {
         return (
             <div>
-                <Route path="/:username-slug" render={this.renderProfile}/>
-                <Route path="/setup" render={this.renderForm}/>
-                <Route exact path="/" render={this.renderLanding }/>
+                <BrowserRouter>
+                    <Switch>
+                        <Route path="/:username-slug" render={this.renderProfile}/>
+                        <Route path="/setup" render={this.renderForm}/>
+                        <Route exact path="/" render={this.renderLanding }/>
+                        <Route exact path="/signup" render={this.renderSignUp }/>
+                    </Switch>
+                </BrowserRouter>
             </div>
-            )
+        )
     }
 }
 

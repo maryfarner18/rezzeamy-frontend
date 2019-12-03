@@ -8,20 +8,53 @@ import Nav from './containers/Nav'
 class App extends React.Component {
   
   state = {
+    user: "",
+    isLoggedIn: false
+  }
+
+  handleLogin = (data) => {
+    this.setState({
+      isLoggedIn: true,
+      user: data.user.username
+    })
+  }
+
+  handleLogout = () => {
+    this.setState({
+    isLoggedIn: false,
     user: ""
+    })
+  }
+
+  loginStatus = () => {
+    fetch('http://localhost:3001/logged_in', {
+        credentials: 'include'
+    })   
+   .then(response => {
+      if (response.data.logged_in) {
+        this.handleLogin(response)
+      } else {
+        this.handleLogout()
+      }
+    })
+    .catch(error => console.log('api errors:', error))
   }
 
   setUser = (username) => {
-    this.setState({
+    this.setState({ 
       user: username
     })
+  }
+
+  componentDidMount() {
+    this.loginStatus()
   }
 
   render() {
     return (
       <div>
         <Nav currentUser={this.state.user} setUser={this.setUser} />
-        <Main currentUser={this.state.user} setUser={this.setUser} />
+        <Main currentUser={this.state.user} setUser={this.setUser} handleLogin={this.handleLogin} loginStatus={this.loginStatus}/>
       </div>
     );
   }
