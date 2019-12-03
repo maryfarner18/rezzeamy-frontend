@@ -1,23 +1,16 @@
 import React, {Component } from 'react'
 import { Button, Form, Icon } from 'semantic-ui-react'
 
-
 class SkillForm extends Component {
-    state = {
-        name: "",
-        proficiency: ""
-    }
-
+    
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-         })
+        this.props.handleChange("skills", this.props.skills.length-1, e.target.name, e.target.value)
     }
 
     saveAndContinue = (e) => {
         e.preventDefault()
-        this.props.setValue("skills", {...this.state})
         this.props.nextStep()
+    
     }
 
     goBack = (e) => {

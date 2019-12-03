@@ -15,54 +15,69 @@ class FormContainer extends Component {
     state = {
         step: 1,
         user: {
-            work_experiences: [{}],
-            skills: [{}],
-            educations: [{}],
-            projects: [{}],
-            websites: [{}],
-            addresses: [{}]
+            first_name: "",
+            last_name: "",
+            email: "",
+            phone: "",
+            work_experiences: [{company: "", title: "", start: "", end:"", city:"", state:""}],
+            skills: [{name: "", proficiency: ""}],
+            educations: [{university: "", degree: "", concentration: "", start: "", end: ""}],
+            projects: [{title: "", link: ""}],
+            websites: [{link: ""}],
+            addresses: [{street1: "", street2: "", city: "", state: "", zip: "", country: ""}]
         },
     }
 
     submitForm = () =>{
-        console.log("ABOUT TO SUBMIT")
-        console.log(this.state) 
+        this.setState(previousState => ({ 
+            username: (previousState.user.first_name + previousState.user.last_name).toLowerCase()
+        }), () => {
+            console.log("ABOUT TO SUBMIT")
+            console.log(this.state) 
+    
+            fetch("http://localhost:3000/users", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    accepts: "application/json"
+                },
+                body: JSON.stringify(this.state.user)
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log("GOT BACK: ", data)
+            })
+            .catch(err => console.log)
 
-        fetch("http://localhost:3000/users", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                accepts: "application/json"
-            },
-            body: JSON.stringify(this.state.user)
         })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log("GOT BACK: ", data)
-        })
-        .catch(err => console.log)
     }
 
-    setValue = (key, value) =>{
+    addMore = (key) => {
+        this.setState({
+            user: {
+                ...this.state.user,
+                [key]: this.state.user.key.push({})
+            }
+        })
+    }
+
+    // setValue = (key, value) =>{
+    handleChange = (key, index, subkey, value) => {
         if(key === "user"){
             this.setState({
                 user: {
                     ...this.state.user,
-                    ...value
+                    [subkey]: value
                 }
             })
         }else{
             let newArr = [...this.state.user[key]]
-            if(newArr.length === 1 && Object.keys(newArr[0]).length === 0 ){
-                newArr = []
-            }
-            newArr.push(value)
+            newArr[index] = Object.assign(newArr[index], {[subkey]: value})
             this.setState({
                 user: {
                     ...this.state.user,
-                    [key]: newArr
-                }
-                
+                    [key]: [...newArr]
+                } 
             })
         }
     }
@@ -90,19 +105,19 @@ class FormContainer extends Component {
     renderForm = () => {
         switch (this.state.step){
             case 1:
-                return <UserInfoForm user={this.state.user} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+                return <UserInfoForm user={this.state.user} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 2:
-                return <AddressForm addresses={this.state.user.addresses} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+                return <AddressForm submitForm={this.submitForm} addresses={this.state.user.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 3:
-                return <EducationForm education={this.state.user.educations} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+                return <EducationForm education={this.state.user.educations} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 4:
-                return <WorkExperienceForm experiences={this.state.user.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+                return <WorkExperienceForm experiences={this.state.user.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 5:
-                return <SkillForm skills={this.state.user.skills} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+                return <SkillForm skills={this.state.user.skills} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 6:
-                return <ProjectForm projects={this.state.user.projects} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+                return <ProjectForm projects={this.state.user.projects} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 7:
-                return <WebsiteForm websites={this.state.user.websites} submitForm={this.submitForm} nextStep={this.nextStep} prevStep={this.prevStep} setValue={this.setValue}/>
+                return <WebsiteForm websites={this.state.user.websites} submitForm={this.submitForm} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
             case 8:
                 return <div>SUCCESS!</div>
             default:
@@ -112,6 +127,7 @@ class FormContainer extends Component {
     }
 
     render() {
+        console.log("state on render = ", this.state )
         return (
             <React.Fragment>
             <Step.Group attached="top" widths={7} size='mini'>

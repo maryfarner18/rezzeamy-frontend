@@ -1,28 +1,16 @@
 import React, {Component } from 'react'
 import { Button, Form } from 'semantic-ui-react'
 
-
 class EducationForm extends Component {
-    
-    state = {
-        university: "",
-        degree: "",
-        concentration: "",
-        start: "",
-        end: ""   
-    }
 
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-           
+        this.props.handleChange("educations", this.props.education.length-1, e.target.name, e.target.value)
     }
 
     saveAndContinue = (e) => {
         e.preventDefault()
-        this.props.setValue('educations', {...this.state})
         this.props.nextStep()
+    
     }
 
     goBack = (e) => {
