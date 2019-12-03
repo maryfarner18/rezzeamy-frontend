@@ -8,7 +8,7 @@ class ProfileContainer extends Component {
 
     render() {
         return (
-            <Profile />
+            <Profile currentUser={this.props.currentUser}/>
         )
     }
 }
