@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 
 class Nav extends Component {
 
-    state = { activeItem: 'home' }
+    state = { activeItem: 'home' } //instead use props of app state
 
-    handleItemClick = (e, { name }) => this.setState(() => (
+    handleItemClick = (e, { name }) => this.setState(() => ( // INSTEAD set app's route state
         {
             activeItem: name
+            //
         }
     ))
     

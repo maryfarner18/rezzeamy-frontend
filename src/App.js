@@ -8,7 +8,8 @@ class App extends React.Component {
   
   state = {
     isLoggedIn: false,
-    user: null
+    user: null,
+    route: "" // "profile, setup, landing
   }
 
   handleLogin = (data) => {
