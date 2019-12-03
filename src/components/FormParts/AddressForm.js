@@ -4,24 +4,21 @@ import { Button, Form, Icon } from 'semantic-ui-react'
 
 class AddressForm extends Component {
     state = {
-        street1: "",
-        street2: "",
-        city: "",
-        state: "",
-        zip: "",
-        country: ""
+        count: 0
+    }
+
+    addMore = () => {
+        console.log('we need to add more')
     }
 
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-            })
+        this.props.handleChange("addresses", this.props.addresses.length-1, e.target.name, e.target.value)
     }
 
     saveAndContinue = (e) => {
         e.preventDefault()
-        this.props.setValue("addresses", {...this.state})
         this.props.nextStep()
+    
     }
 
     goBack = (e) => {
@@ -30,7 +27,7 @@ class AddressForm extends Component {
     }
 
     render() {
-        let index = this.props.addresses.length - 1
+        let index = this.props.addresses.length -1
         return (
             <Form onSubmit={this.saveAndContinue}>
                 <Form.Field>
@@ -58,7 +55,7 @@ class AddressForm extends Component {
                     <input onChange={this.handleChange} value={this.props.addresses[index].country} name="country" />
                 </Form.Field>
                 <Button onClick={this.goBack}>Back</Button>
-                <Icon name="plus"/>
+                <Icon onClick={this.addMore} name="plus"/>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
         )

@@ -1,28 +1,16 @@
 import React, {Component } from 'react'
 import { Button, Form } from 'semantic-ui-react'
 
-
 class WorkExperienceForm extends Component {
-    state = {
-        company: "",
-        title: "",
-        start: "",
-        end: "",
-        city: "",
-        state: "",
-        description: ""
-    }
-
+    
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-         })
+        this.props.handleChange("work_experiences", this.props.experiences.length-1, e.target.name, e.target.value)
     }
 
     saveAndContinue = (e) => {
         e.preventDefault()
-        this.props.setValue("work_experiences", {...this.state})
         this.props.nextStep()
+    
     }
 
     goBack = (e) => {
