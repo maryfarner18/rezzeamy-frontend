@@ -18,6 +18,8 @@ class App extends React.Component {
   }
 
   render() {
+    console.log("App state = ", this.state)
+    console.log("Sending down ", this.state.user)
     return (
       <div>
         <Nav />

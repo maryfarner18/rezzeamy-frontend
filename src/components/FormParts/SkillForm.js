@@ -18,7 +18,7 @@ class SkillForm extends Component {
         this.props.prevStep();
     }
 
-    add = (e) => {
+    addMore = (e) => {
         this.props.addMore("skills")
     }
 
