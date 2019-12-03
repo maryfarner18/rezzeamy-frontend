@@ -1,5 +1,5 @@
 import React, {Component } from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Icon } from 'semantic-ui-react'
 
 class EducationForm extends Component {
 
@@ -16,6 +16,10 @@ class EducationForm extends Component {
     goBack = (e) => {
         e.preventDefault();
         this.props.prevStep();
+    }
+
+    add = (e) => {
+        this.props.addMore("educations")
     }
 
     render() {
@@ -42,6 +46,9 @@ class EducationForm extends Component {
                     <label>End</label>
                     <input onChange={this.handleChange} value={this.props.education[index].end} name="end" />
                 </Form.Field>
+                <br></br>
+                <Icon onClick={this.props.addMore} name="plus"/>
+                <br></br>
                 <Button onClick={this.goBack}>Back</Button>
                 <Button type='submit'>Save & Continue</Button>
             </Form>
