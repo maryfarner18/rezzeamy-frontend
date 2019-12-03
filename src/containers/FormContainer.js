@@ -51,7 +51,16 @@ class FormContainer extends Component {
             .then(resp => resp.json())
             .then(data => {
                 console.log("GOT BACK: ", data)
-                // working on this
+                let userId = data.user.id
+                fetch(`http://localhost:3000/users/${userId}`, {
+                    method: "PATCH",
+                    body: {
+                        profile_image: this.state.profile_image,
+                        resume: this.state.resume
+                    }
+                })
+                .then(resp => resp.json())
+                .then(console.log)
             })
             .catch(console.log)
 
