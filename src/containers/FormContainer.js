@@ -1,12 +1,5 @@
 import React, {Component } from 'react'
 
-// import EducationForm from '../components/FormParts/EducationForm'
-// import SkillForm from '../components/FormParts/SkillForm'
-// import UserInfoForm from '../components/FormParts/UserInfoForm'
-// import WorkExperienceForm from '../components/FormParts/WorkExperienceForm'
-// import ProjectForm from '../components/FormParts/ProjectForm'
-// import AddressForm from '../components/FormParts/AddressForm'
-// import WebsiteForm from '../components/FormParts/WebsiteForm'
 import FormBar from '../components/FormParts/FormBar'
 import SuccessForm from '../components/FormParts/SuccessForm'
 import FormPart from '../components/FormParts/FormPart'
@@ -166,25 +159,25 @@ class FormContainer extends Component {
         switch (this.state.step){
             case 1:
                 return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
-                //return <UserInfoForm user={this.state.form.user} profileImage={this.state.profile_image} resume={this.state.resume} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
+                
             case 2:
                 return <FormPart formType="addresses" info={addresses[addresses.length -1 ]} labels={LABELS.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
-                //return <AddressForm submitForm={this.submitForm} addresses={this.state.form.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                
             case 3:
                 return <FormPart formType="educations" info={educations[educations.length -1 ]} labels={LABELS.educations} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore}/>
-                //return <EducationForm education={this.state.form.educations} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                
             case 4:
                 return <FormPart formType="work_experiences" info={work_experiences[work_experiences.length -1 ]} labels={LABELS.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore}/>
-                //return <WorkExperienceForm experiences={this.state.form.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                
             case 5:
                 return <FormPart formType="skills" info={skills[skills.length -1 ]} labels={LABELS.skills} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore}/>
-                //return <SkillForm skills={this.state.form.skills} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                
             case 6:
                 return <FormPart formType="projects" info={projects[projects.length -1 ]} labels={LABELS.projects} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore}/>
-                //return <ProjectForm projects={this.state.form.projects} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                
             case 7:
                 return <FormPart formType="websites" info={websites[websites.length -1 ]} labels={LABELS.websites} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore} submitForm={this.submitForm}/>
-                //return <WebsiteForm websites={this.state.form.websites} submitForm={this.submitForm} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                
             case 8:
                 return <SuccessForm currentUsername={this.props.currentUser.username}/>
             default:
