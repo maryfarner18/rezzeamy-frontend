@@ -8,14 +8,7 @@ import Nav from './containers/Nav'
 class App extends React.Component {
   
   state = {
-    user: "",
-    page: "/"
-  }
-
-  setPage = (navPage) => {
-    this.setState({
-      page: navPage
-    })
+    user: ""
   }
 
   setUser = (username) => {
@@ -27,8 +20,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav currentUser={this.state.user} setUser={this.setUser} setPage={this.setPage}/>
-        <Main currentUser={this.state.user} setUser={this.setUser} page={this.state.page}/>
+        <Nav currentUser={this.state.user} setUser={this.setUser} />
+        <Main currentUser={this.state.user} setUser={this.setUser} />
       </div>
     );
   }

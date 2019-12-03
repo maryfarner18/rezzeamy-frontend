@@ -10,8 +10,6 @@ class Nav extends Component {
         {
             activeItem: name
         }
-    ), () => (
-        this.props.setPage(this.state.activeItem)
     ))
     
     render() {
