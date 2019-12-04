@@ -1,52 +1,59 @@
 import React, {Component } from 'react'
 
-import EducationForm from '../components/FormParts/EducationForm'
-import SkillForm from '../components/FormParts/SkillForm'
-import UserInfoForm from '../components/FormParts/UserInfoForm'
-import WorkExperienceForm from '../components/FormParts/WorkExperienceForm'
-import ProjectForm from '../components/FormParts/ProjectForm'
-import AddressForm from '../components/FormParts/AddressForm'
-import WebsiteForm from '../components/FormParts/WebsiteForm'
 import FormBar from '../components/FormParts/FormBar'
 import SuccessForm from '../components/FormParts/SuccessForm'
+import FormPart from '../components/FormParts/FormPart'
 
 import {Step, Segment} from 'semantic-ui-react'
 
+import {Redirect} from 'react-router-dom'
+
 import $ from 'jquery';
 
+const LABELS = {
+    user: {first_name: "First Name", last_name: "Last Name", email: "Email", phone: "Phone", resume: "Resume", profile_image: "Profile Pic"},
+    educations: {university: "University", degree: "Decgree", concentration: "Concentration", start: "Start", end: "End"},
+    websites: {link: "Link"},
+    skills: {name: "Skill", proficiency: "Proficiency"},
+    projects: {title: "Project Title", link: "Link"},
+    work_experiences: {company: "Company", title: "Title", description: "Description", start: "Start", end:"End", city:"City", state:"State"},
+    addresses: {street1: "Street", street2: "Street 2", city: "City", state: "State", zip: "Zip", country: "Country"}
+}
+
 const FIELD_OBJ = {
+    user: {first_name: "", last_name: "", email: "", phone: "", resume: "", profile_image: ""},
     educations: {university: "", degree: "", concentration: "", start: "", end: ""},
     websites: {link: ""},
     skills: {name: "", proficiency: ""},
     projects: {title: "", link: ""},
     work_experiences: {company: "", title: "", description: "", start: "", end:"", city:"", state:""},
+    addresses: {street1: "", street2: "", city: "", state: "", zip: "", country: ""}
 }
 
 class FormContainer extends Component {
     state = {
         step: 1,
         form: {
-
-            user: {first_name: "", last_name: "", email: "", phone: "", username: "", resume: "", profile_image: ""},
+            user: {...FIELD_OBJ.user, ...this.props.currentUser},
             work_experiences: [{...FIELD_OBJ.work_experiences}],
             skills: [{...FIELD_OBJ.skills}],
             educations: [{...FIELD_OBJ.educations}],
             projects: [{...FIELD_OBJ.projects}],
             websites: [{...FIELD_OBJ.websites}],
-            addresses: [{street1: "", street2: "", city: "", state: "", zip: "", country: ""}]
+            addresses: [{...FIELD_OBJ.addresses}]
         },
     }
 
     submitForm = () =>{
-        this.setState(previousState => ({ 
-            form: {
-                ...this.state.form,
-                user: {
-                    ...this.state.form.user,
-                    username: (previousState.form.user.first_name + previousState.form.user.last_name).toLowerCase()
-                }
-            }  
-        }), () => {
+        // this.setState(previousState => ({ 
+        //     form: {
+        //         ...this.state.form,
+        //         user: {
+        //             ...this.state.form.user,
+        //             username: (previousState.form.user.first_name + previousState.form.user.last_name).toLowerCase()
+        //         }
+        //     }  
+        // }), () => {
 
             fetch("http://localhost:3000/users", {
                 method: "POST",
@@ -60,8 +67,8 @@ class FormContainer extends Component {
             .then(data => {
                 console.log("GOT BACK: ", data)
                 if(data.user.username !== "undefined"){
-                    console.log("setting username in app to ", data.user.username)
-                    this.props.setUser(data.user.username)
+                    console.log("setting username in app to ", data.user)
+                    this.props.setUser(data.user)
                 }
                 this.nextStep()
                 // let userId = data.user.id
@@ -77,7 +84,7 @@ class FormContainer extends Component {
             })
             .catch(console.log)
 
-        })
+        // })
     }
 
 //     handleFileChange = (accessor, value) => {
@@ -87,7 +94,7 @@ class FormContainer extends Component {
 //         )
 //     }
 
-    handleChange = (key, index, subkey, value) => {
+    handleChange = (key, subkey, value) => {
         if(key === "user"){
             this.setState({
                 form: {
@@ -100,12 +107,19 @@ class FormContainer extends Component {
             })
 
         }else{
-            let newArr = [...this.state.form[key]]
-            newArr[index] = Object.assign(newArr[index], {[subkey]: value})
+    
+            let len = this.state.form[key].length
+
             this.setState({
                 form: {
                     ...this.state.form,
-                    [key]: [...newArr]
+                    [key]: this.state.form[key].map((obj, index) => {
+                                if(index === len - 1){
+                                    return {...obj, [subkey]: value}
+                                }else{
+                                    return obj
+                                }
+                            })
                 } 
             })
         }
@@ -142,41 +156,68 @@ class FormContainer extends Component {
     }
 
     renderForm = () => {
+        const {user, addresses, educations, work_experiences, skills, projects, websites} = this.state.form
         switch (this.state.step){
             case 1:
-                return <UserInfoForm user={this.state.form.user} profileImage={this.state.profile_image} resume={this.state.resume} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
+                return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
+                
             case 2:
-                return <AddressForm submitForm={this.submitForm} addresses={this.state.form.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange}/>
+                return <FormPart formType="addresses" info={addresses[addresses.length -1 ]} labels={LABELS.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
+                
             case 3:
-                return <EducationForm education={this.state.form.educations} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                return <FormPart formType="educations" info={educations[educations.length -1 ]} labels={LABELS.educations} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore}/>
+                
             case 4:
-                return <WorkExperienceForm experiences={this.state.form.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                return <FormPart formType="work_experiences" info={work_experiences[work_experiences.length -1 ]} labels={LABELS.work_experiences} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore}/>
+                
             case 5:
-                return <SkillForm skills={this.state.form.skills} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                return <FormPart formType="skills" info={skills[skills.length -1 ]} labels={LABELS.skills} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore}/>
+                
             case 6:
-                return <ProjectForm projects={this.state.form.projects} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                return <FormPart formType="projects" info={projects[projects.length -1 ]} labels={LABELS.projects} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore}/>
+                
             case 7:
-                return <WebsiteForm websites={this.state.form.websites} submitForm={this.submitForm} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} addMore={this.addMore}/>
+                return <FormPart formType="websites" info={websites[websites.length -1 ]} labels={LABELS.websites} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore} submitForm={this.submitForm}/>
+                
             case 8:
-                return <SuccessForm currentUser={this.props.currentUser}/>
+                return <SuccessForm currentUsername={this.props.currentUser.username}/>
             default:
                 break; 
         }
     }
 
+    componentDidUpdate(){
+        this.setState({
+            form: {
+                ...this.state.form,
+                user: {
+                    ...this.state.user,
+                    ...this.props.currentUser
+                }
+            }
+        })
+    }
+
     render() {
-        return (
-            <React.Fragment>
-            <Step.Group attached="top" widths={7} size='mini'>
-                <FormBar/>
-            </Step.Group>
+        console.log("form state = ", this.state)
+        if(!this.props.currentUser.username){
+            return <Redirect to="/signup"/>
 
-            <Segment attached>
-                {this.renderForm()}
-            </Segment>
+        }{
+            return (
+                <React.Fragment>
+                <Step.Group attached="top" widths={7} size='mini'>
+                    <FormBar/>
+                </Step.Group>
+    
+                <Segment attached>
+                    {this.renderForm()}
+                </Segment>
+    
+                </React.Fragment>
+            )
 
-            </React.Fragment>
-        )
+        }
     }
 }
 

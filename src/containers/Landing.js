@@ -14,10 +14,10 @@ class Landing extends Component {
             <Grid columns={2} divided>
                 <Grid.Row>
                     <Grid.Column>
-                        <Login ></Login>
+                        <Login handleLogin={this.props.handleLogin}></Login>
                     </Grid.Column>
                     <Grid.Column>
-                        <Link to="/setup">Get Started</Link>
+                        <Link to="/signup">Get Started!</Link>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
