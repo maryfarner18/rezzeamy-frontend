@@ -21,7 +21,7 @@ class Main extends Component {
 
     renderProfile= (routerProps) =>{
         console.log("router props", routerProps)
-        return <ProfileContainer userslug={routerProps.match.params.userslug} />
+        return <ProfileContainer userslug={routerProps.match.params.userslug} currentUser={this.props.currentUser} />
     }
     
     renderLanding = () =>{
