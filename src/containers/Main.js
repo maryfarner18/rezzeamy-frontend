@@ -9,15 +9,23 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 class Main extends Component {
 
     renderForm = () =>{
-        return <FormContainer currentUser={this.props.currentUser} setUser={this.props.setUser}/>
+        return <FormContainer 
+        currentUser={this.props.currentUser} 
+        setUser={this.props.setUser}
+        />
     }
 
     renderProfile= () =>{
-      return <ProfileContainer currentUser={this.props.currentUser} />
+      return <ProfileContainer 
+      currentUser={this.props.currentUser} 
+      />
     }
     
     renderLanding = () =>{
-        return <Landing currentUser={this.props.user} setUser={this.props.setUser} handleLogin={this.props.handleLogin}/>
+        return <Landing 
+        currentUser={this.props.user} 
+        setUser={this.props.setUser} 
+        />
     }
     
     renderNotFound = () =>{

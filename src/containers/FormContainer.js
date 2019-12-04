@@ -55,34 +55,34 @@ class FormContainer extends Component {
         //     }  
         // }), () => {
 
-            fetch("http://localhost:3000/users", {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accepts: "application/json"
-                },
-                body: JSON.stringify(this.state.form)
-            })
-            .then(resp => resp.json())
-            .then(data => {
-                console.log("GOT BACK: ", data)
-                if(data.user.username !== "undefined"){
-                    console.log("setting username in app to ", data.user)
-                    this.props.setUser(data.user)
-                }
-                this.nextStep()
-                // let userId = data.user.id
-                // fetch(`http://localhost:3000/users/${userId}`, {
-                //     method: "PATCH",
-                //     body: {
-                //         profile_image: this.state.profile_image,
-                //         resume: this.state.resume
-                //     }
-                // })
-                // .then(resp => resp.json())
-                // .then(console.log)
-            })
-            .catch(console.log)
+        fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                accept: "application/json"
+            },
+            body: JSON.stringify(this.state.form)
+        })
+        .then(resp => resp.json())
+        .then(response => {
+            
+            // if(data.errors)
+
+            this.props.setUser(response.data)
+
+            this.nextStep()
+            // let userId = response.data.user.id
+            // fetch(`http://localhost:3000/users/${userId}`, {
+            //     method: "PATCH",
+            //     body: {
+            //         profile_image: this.state.profile_image,
+            //         resume: this.state.resume
+            //     }
+            // })
+            // .then(resp => resp.json())
+            // .then(console.log)
+        })
+        .catch(console.log)
 
         // })
     }
