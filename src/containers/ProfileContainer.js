@@ -6,9 +6,10 @@ import {Redirect, withRouter} from 'react-router-dom'
 import {Dimmer, Segment, Image, Loader} from 'semantic-ui-react'
 
 class ProfileContainer extends Component {
+
     state = {
          showUser: {
-            user: {...FIELD_OBJ.user}, 
+            user: {...FIELD_OBJ.user},
             work_experiences: [{...FIELD_OBJ.work_experiences}],
             skills: [{...FIELD_OBJ.skills}],
             educations: [{...FIELD_OBJ.educations}],
@@ -79,8 +80,9 @@ class ProfileContainer extends Component {
 
     render() {
         console.log(this.state)
+        console.log('Profile Container Props: ', this.props)
         return (
-            this.state.loading?  this.renderLoading() : <Profile showUser={this.state.showUser} edit={this.props.edit} submitEdit={this.submitEdit} />
+            this.state.loading ?  this.renderLoading() : <Profile showUser={this.state.showUser} edit={this.props.edit} submitEdit={this.submitEdit} currentUser={this.props.currentUser} />
         )
     }
 

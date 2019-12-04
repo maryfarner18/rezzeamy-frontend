@@ -25,8 +25,23 @@ class Profile extends Component {
         return <EditForm {...this.props.showUser} handleSubmit={this.props.submitEdit} />
     }
 
+    renderEditButton = () => {
+        return (
+                this.props.currentUser.user && this.props.currentUser.user.user_slug === this.props.showUser.user.user_slug
+                ?
+                <Button animated='vertical' onClick={this.handleEditButtonClick}>
+                    <Button.Content hidden>Edit</Button.Content>
+                    <Button.Content visible>
+                        <Icon name='edit' />
+                    </Button.Content>
+                </Button>
+                :
+                null
+        ) 
+    }
+
     renderAboutComponent = () => {
-        return <About showUser={this.props.showUser.user}/>
+        return <About showUser={this.props.showUser.user} />
     }
 
     renderWorkExperienceComponent = () => {
@@ -62,12 +77,7 @@ class Profile extends Component {
                 {this.renderEducationComponent()}
                 {this.renderProjectsComponent()}
                 {this.renderContactComponent()}
-                <Button animated='vertical' onClick={this.handleEditButtonClick}>
-                    <Button.Content hidden>Edit</Button.Content>
-                    <Button.Content visible>
-                        <Icon name='edit' />
-                    </Button.Content>
-                </Button>
+                {this.renderEditButton()}
             </div>
         )
     }

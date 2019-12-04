@@ -21,9 +21,11 @@ class Main extends Component {
 
     renderProfile= (routerProps) =>{
         console.log("router props", routerProps)
+      
         if(routerProps.match.path === "/edit") return <ProfileContainer edit={true} userslug={routerProps.match.params.userslug} />
         
-        return <ProfileContainer edit={false} userslug={routerProps.match.params.userslug} />
+        return <ProfileContainer edit={false} userslug={routerProps.match.params.userslug} currentUser={this.props.currentUser} />
+
     }
     
     renderLanding = () =>{
