@@ -49,14 +49,16 @@ class Nav extends Component {
                     </Fragment>
                 :
                     <Fragment>
-                        <Menu.Item
-                            as={Link} to='/setup'
-                            name='create'
-                            active={activeItem === 'create'}
-                            onClick={this.handleItemClick}
-                        >
-                            Create A Profile!
-                        </Menu.Item>
+                        <Menu.Menu position='right'>
+                            <Menu.Item
+                                as={Link} to='/setup'
+                                name='create'
+                                active={activeItem === 'create'}
+                                onClick={this.handleItemClick}
+                            >
+                                Create A Profile!
+                            </Menu.Item>
+                        </Menu.Menu>
                     </Fragment>
 
                 }

@@ -66,7 +66,7 @@ class FormContainer extends Component {
         })
         .then(resp => resp.json())
         .then(json => {
-            
+            console.log(json)
             if(json.data) {
                 console.log(json)
                   this.props.setUser(json.data)
@@ -209,7 +209,7 @@ class FormContainer extends Component {
     // }
 
     render() {
-        console.log("form state = ", this.state)
+        // console.log("form state = ", this.state)
         
         return (
             <React.Fragment>
