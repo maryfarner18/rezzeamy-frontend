@@ -22,8 +22,14 @@ export default class Profile extends Component {
         })
     }
 
+    handleEdit = (event) => {
+        this.setState({
+            editing: false
+        }, () => this.props.handleEdit(event))
+    }
+
     renderEditForm = () => {
-        return <EditForm {...this.props.showUser} />
+        return <EditForm {...this.props.showUser} handleSubmit={this.handleEdit} />
     }
 
     renderAboutComponent = () => {
@@ -49,13 +55,14 @@ export default class Profile extends Component {
     renderContactComponent = () => {
         return <Contact 
                     resources={this.props.showUser.websites} 
-                    addresses={this.props.showUser.addresses} 
+                    addresses={this.props.showUser.addresses}
                 />
     }
 
     renderChildComponents = () => {
+        console.log('Profile props: ', this.props)
         return (
-            <div>
+            <div style={{textAlign: 'center'}}>
                 {this.renderAboutComponent()}
                 {this.renderWorkExperienceComponent()}
                 {this.renderSkillsComponent()}

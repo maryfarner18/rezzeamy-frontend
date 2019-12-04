@@ -18,6 +18,27 @@ class ProfileContainer extends Component {
          },
          loading: true
     }
+    
+    handleEdit = (event) => {
+        console.log('Submitting...', event)
+        this.setState({
+            showUser: {...event}
+        }, () => this.submitPatch(event))
+    }
+
+    submitPatch = (obj) => {
+        fetch(`${API}/users/${obj.user.id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        })
+        .then(resp => resp.json())
+        .then(console.log)
+        .catch(err => console.log(err))
+    }
 
     componentDidMount() {
         console.log("HERE, fetching to get", this.props.userslug)
@@ -55,8 +76,9 @@ class ProfileContainer extends Component {
     }
 
     render() {
+        console.log(this.state)
         return (
-            this.state.loading?  this.renderLoading() : <Profile showUser={this.state.showUser}/>
+            this.state.loading?  this.renderLoading() : <Profile showUser={this.state.showUser}  handleEdit={this.handleEdit} />
         )
     }
 
