@@ -7,29 +7,22 @@ import Projects from '../components/Profile/Projects'
 import WorkExperience from '../components/Profile/WorkExperience'
 import EditForm from '../components/Profile/EditForm'
 import { Button, Icon } from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
 
 
-
-export default class Profile extends Component {
-
-    state = {
-        editing: false
-    }
+class Profile extends Component {
 
     handleEditButtonClick = () => {
-        this.setState({
-            editing: true
-        })
+        this.props.history.push("/edit")
     }
 
-    handleEdit = (event) => {
-        this.setState({
-            editing: false
-        }, () => this.props.handleEdit(event))
-    }
+    // handleEdit = (event) => {
+    //     this.props.submitEdit(event)
+
+    // }
 
     renderEditForm = () => {
-        return <EditForm {...this.props.showUser} handleSubmit={this.handleEdit} />
+        return <EditForm {...this.props.showUser} handleSubmit={this.props.submitEdit} />
     }
 
     renderAboutComponent = () => {
@@ -80,7 +73,7 @@ export default class Profile extends Component {
     }
 
     renderComponents = () => {
-        return this.state.editing ? this.renderEditForm() : this.renderChildComponents()
+        return this.props.edit ? this.renderEditForm() : this.renderChildComponents()
     }
 
     render() {
@@ -90,3 +83,5 @@ export default class Profile extends Component {
         )
     }
 }
+
+export default withRouter(Profile)

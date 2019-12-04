@@ -9,7 +9,15 @@ export const API = 'http://localhost:3000'
 class App extends React.Component {
   
   state = {
+    step: 1,
     currentUser: {}
+  }
+
+  nextStep = (newStep) => {
+    console.log("setting step to ", newStep)
+    this.setState({
+      step: newStep
+    })
   }
 
   setUser = (data) => {
@@ -57,6 +65,8 @@ class App extends React.Component {
         setUser={this.setUser} 
         />
         <Main 
+        nextStep={this.nextStep} 
+        step={this.state.step} 
         currentUser={this.state.currentUser} 
         setUser={this.setUser} />
       </div>

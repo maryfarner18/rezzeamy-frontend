@@ -11,7 +11,6 @@ import {FIELD_OBJ, LABELS} from './FormData'
 
 class FormContainer extends Component {
     state = {
-        step: this.props.step,
         form: {
             user: {...FIELD_OBJ.user}, 
             work_experiences: [{...FIELD_OBJ.work_experiences}],
@@ -29,7 +28,7 @@ class FormContainer extends Component {
     }
 
     submitForm = () => {
-      
+        console.log("submitting.......")
         this.setState({
             form: {
                 ...this.state.form,
@@ -67,22 +66,22 @@ class FormContainer extends Component {
                   })
               }
 
-                let userId = json.data.user.id
-                const {profile_image, resume} = this.state.form.user
-                console.log(profile_image, resume)
+                // let userId = json.data.user.id
+                // const {profile_image, resume} = this.state.form.user
+                // console.log(profile_image, resume)
 
-                let formData = new FormData()
-                formData.append("profile_image", profile_image)
-                formData.append("resume", resume)
+                // let formData = new FormData()
+                // formData.append("profile_image", profile_image)
+                // formData.append("resume", resume)
 
-                fetch(`${API}/users/${userId}`, {
-                    method: "PATCH",
-                    body: {
-                        formData
-                    }
-                })
-                .then(resp => resp.json())
-                .then(console.log)
+                // fetch(`${API}/users/${userId}`, {
+                //     method: "PATCH",
+                //     body: {
+                //         formData
+                //     }
+                // })
+                // .then(resp => resp.json())
+                // .then(console.log)
             })
             .catch(console.log)
         })
@@ -135,7 +134,6 @@ class FormContainer extends Component {
     }
 
     addMore = (key) => {
-   
         this.setState({
             form: {
                 ...this.state.form,
@@ -145,28 +143,25 @@ class FormContainer extends Component {
     }
 
     nextStep = () => {
-        let thisStep = this.state.step
-        let nextStep = thisStep + 1
-        $('#'+ nextStep).addClass('active').removeClass("disabled")
+        let thisStep = this.props.step
+        let newStep = thisStep + 1
+        $('#'+ newStep).addClass('active').removeClass("disabled")
         $('#'+ thisStep).addClass("completed").removeClass("active")
-        this.setState({
-            step: nextStep
-        })
+        this.props.nextStep(newStep)
     }
 
     prevStep = () => {
-        let thisStep = this.state.step
-        let nextStep = this.state.step - 1
-        $('#'+ nextStep).addClass('active').removeClass("disabled")
+        let thisStep = this.props.step
+        let newStep = this.props.step - 1
+        $('#'+ newStep).addClass('active').removeClass("disabled")
         $('#'+ thisStep).removeClass("active").addClass("disabled")
-        this.setState({
-            step: nextStep
-        })
+        this.props.nextStep(newStep)
     }
 
     renderForm = () => {
         const {user, addresses, educations, work_experiences, skills, projects, websites} = this.state.form
-        switch (this.state.step){
+        console.log("at render form switch ", this.props)
+        switch (this.props.step){
             case 1:
                 return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleFileChange={this.handleFileChange} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
                 
@@ -197,11 +192,13 @@ class FormContainer extends Component {
         }
     }
 
-    render() {       
+    render() {    
+        console.log("in form container step = ", this.props)   
         return (
-            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+            <Grid textAlign='center' style={{ maxheight: '100vh' }} verticalAlign='top'>
                 <Grid.Column textAlign='left' style={{ maxWidth: 1024 }}>
-                    <Step.Group attached="top" widths={7} size='mini'>
+                    <Step.Group attached="top" widths={7} 
+                    size='mini'>
                         <FormBar/>
                     </Step.Group>
 
