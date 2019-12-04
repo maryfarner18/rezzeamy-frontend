@@ -4,21 +4,23 @@ import { Button, Form, Divider, Header } from 'semantic-ui-react'
 export default class EditForm extends Component {
 
     state = {
-        first_name: this.props.first_name,
-        last_name: this.props.last_name,
-        email: this.props.email,
-        phone: this.props.phone,
+        user: this.props.user,
         work_experiences: this.props.work_experiences,
         skills: this.props.skills,
-        education: this.props.education,
+        educations: this.props.educations,
         projects: this.props.projects,
         websites: this.props.websites,
         addresses: this.props.addresses
     }
 
-    handleChange = (e) => {
+    handleUserChange = (e) => {
+        // let prevUserField = this.state.user.find(f => f.key === e.target.name)
+        // prevUserField = e.target.value
         this.setState({
-            [e.target.name]: e.target.value
+            user: {
+                ...this.state.user,
+                [e.target.name]: e.target.value
+            }
         })
     }
 
@@ -39,10 +41,10 @@ export default class EditForm extends Component {
     }
 
     handleEduChange = (e, edu) => {
-        let prevEdu = this.state.education.find(education => education.id === edu.id)
+        let prevEdu = this.state.educations.find(education => education.id === edu.id)
         prevEdu[e.target.name] = e.target.value
         this.setState({
-            education: [...this.state.education]
+            educations: [...this.state.educations]
         })
     }
 
@@ -70,25 +72,31 @@ export default class EditForm extends Component {
         })
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault()
+        event.persist()
+        this.props.handleSubmit(this.state)
+    }
+
     render() {
         console.log(this.state)
         return (
-            <Form onSubmit={null} style={{margin: 10}} >
+            <Form onSubmit={this.handleSubmit} style={{margin: 10}} >
                 <Form.Field>
                     <label>First Name</label>
-                    <Form.Input name='first_name' placeholder='First Name' value={this.state.first_name} onChange={this.handleChange}/>
+                    <Form.Input name='first_name' placeholder='First Name' value={this.state.user.first_name} onChange={this.handleUserChange}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Last Name</label>
-                    <Form.Input name='last_name' placeholder='Last Name' value={this.state.last_name} onChange={this.handleChange}/>
+                    <Form.Input name='last_name' placeholder='Last Name' value={this.state.user.last_name} onChange={this.handleUserChange}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Email</label>
-                    <Form.Input name='email' placeholder='Email' value={this.state.email} onChange={this.handleChange} />
+                    <Form.Input name='email' placeholder='Email' value={this.state.user.email} onChange={this.handleUserChange} />
                 </Form.Field>
                 <Form.Field>
                     <label>Phone Number</label>
-                    <Form.Input name='phone' placeholder='Phone Number' value={this.state.phone} type='number' onChange={this.handleChange} />
+                    <Form.Input name='phone' placeholder='Phone Number' value={this.state.user.phone} type='number' onChange={this.handleUserChange} />
                 </Form.Field>
                 <Divider horizontal style={{paddingTop: 50, paddingBottom: 50}}>
                     <Header as='h4'>Work Experience</Header>
@@ -122,9 +130,9 @@ export default class EditForm extends Component {
                     )
                 })}
                 <Divider horizontal style={{paddingTop: 50, paddingBottom: 50}}>
-                    <Header as='h4'>Education</Header>
+                    <Header as='h4'>Educations</Header>
                 </Divider>
-                {this.props.education.map(edu => {
+                {this.props.educations.map(edu => {
                     return (
                         <React.Fragment key={edu.id}>
                             <Form.Group widths='equal' style={{margin: 10}}>

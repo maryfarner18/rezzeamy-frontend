@@ -3,6 +3,7 @@ import Profile from '../components/Profile';
 import {FIELD_OBJ} from './FormData'
 import {API} from '../App'
 import {Redirect, withRouter} from 'react-router-dom'
+import { tsExpressionWithTypeArguments } from '@babel/types';
 
 class ProfileContainer extends Component {
     state = {
@@ -16,6 +17,27 @@ class ProfileContainer extends Component {
             addresses: [{...FIELD_OBJ.addresses}]
          },
          loading: true
+    }
+    
+    handleEdit = (event) => {
+        console.log('Submitting...', event)
+        this.setState({
+            showUser: {...event}
+        }, () => this.submitPatch(event))
+    }
+
+    submitPatch = (obj) => {
+        fetch(`${API}/users/${obj.user.id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        })
+        .then(resp => resp.json())
+        .then(console.log)
+        .catch(err => console.log(err))
     }
 
     componentDidMount() {
@@ -46,8 +68,9 @@ class ProfileContainer extends Component {
     }
 
     render() {
+        console.log(this.state)
         return (
-            this.state.loading?  "Loading..." : <Profile showUser={this.state.showUser}/>
+            this.state.loading?  "Loading..." : <Profile showUser={this.state.showUser} handleEdit={this.handleEdit} />
         )
     }
 
