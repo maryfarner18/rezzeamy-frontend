@@ -5,16 +5,13 @@ import SuccessForm from '../components/FormParts/SuccessForm'
 import FormPart from '../components/FormParts/FormPart'
 
 import {Step, Segment, Grid} from 'semantic-ui-react'
-
 import {API} from '../App'
-
 import $ from 'jquery';
-
 import {FIELD_OBJ, LABELS} from './FormData'
 
 class FormContainer extends Component {
     state = {
-        step: 1,
+        step: this.props.step,
         form: {
             user: {...FIELD_OBJ.user}, 
             work_experiences: [{...FIELD_OBJ.work_experiences}],
@@ -55,16 +52,21 @@ class FormContainer extends Component {
               console.log(json)
               if(json.data) {
                 console.log(json)
+                console.log("setting user")
                 this.props.setUser(json.data)
+                console.log("go to next step")
+                this.nextStep()
+                
                 // No need to redirect here, this will conditonally re-render home
                 
               } else {
                   this.props.setUser({})
+                  this.nextStep()
                   this.setState({
                       errors: json.errors
                   })
               }
-            //   this.nextStep()
+
                 let userId = json.data.user.id
                 const {profile_image, resume} = this.state.form.user
                 console.log(profile_image, resume)
@@ -121,12 +123,12 @@ class FormContainer extends Component {
                 form: {
                     ...this.state.form,
                     [key]: this.state.form[key].map((obj, index) => {
-                                if(index === len - 1){
-                                    return {...obj, [subkey]: value}
-                                }else{
-                                    return obj
-                                }
-                            })
+                            if(index === len - 1){
+                                return {...obj, [subkey]: value}
+                            }else{
+                                return obj
+                            }
+                        })
                 } 
             })
         }
@@ -188,16 +190,14 @@ class FormContainer extends Component {
                 
             case 8:
                 // need to do something here about error handling
-                return <SuccessForm currentUsername={this.props.currentUser.username}/>
+                return <SuccessForm currentUserSlug={this.props.currentUser.user.user_slug}/>
                 
             default:
                 break; 
         }
     }
 
-    render() {
-        // console.log("form state = ", this.state)
-        
+    render() {       
         return (
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                 <Grid.Column textAlign='left' style={{ maxWidth: 1024 }}>
