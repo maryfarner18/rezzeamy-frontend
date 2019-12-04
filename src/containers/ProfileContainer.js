@@ -3,6 +3,7 @@ import Profile from '../components/Profile';
 import {FIELD_OBJ} from './FormData'
 import {API} from '../App'
 import {Redirect, withRouter} from 'react-router-dom'
+import {Dimmer, Segment, Image, Loader} from 'semantic-ui-react'
 
 class ProfileContainer extends Component {
     state = {
@@ -23,9 +24,7 @@ class ProfileContainer extends Component {
         fetch(`${API}/users/${this.props.userslug}`)
         .then(resp => resp.json())
         .then(json => {
-            console.log("Looking at user ", json )
             if(!json.data){
-                console.log("jere")
                 this.props.history.push('/404')
             }else {
                 this.setState({
@@ -45,9 +44,19 @@ class ProfileContainer extends Component {
         this.setState({ showUser: json })
     }
 
+    renderLoading = () => {
+       return (
+            <Segment style={{ minHeight: 100 }}>
+                <Dimmer active>
+                    <Loader indeterminate>Preparing Files</Loader>
+                </Dimmer>
+            </Segment>
+        )
+    }
+
     render() {
         return (
-            this.state.loading?  "Loading..." : <Profile showUser={this.state.showUser}/>
+            this.state.loading?  this.renderLoading() : <Profile showUser={this.state.showUser}/>
         )
     }
 

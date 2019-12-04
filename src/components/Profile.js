@@ -39,7 +39,7 @@ export default class Profile extends Component {
     }
 
     renderEducationComponent = () => {
-        return <Education education={this.props.showUser.education} />
+        return <Education educations={this.props.showUser.educations} />
     }
 
     renderProjectsComponent = () => {

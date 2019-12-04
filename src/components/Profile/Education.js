@@ -8,7 +8,7 @@ const Education = (props) => {
             <Divider horizontal style={{paddingTop: 50, paddingBottom: 50}}>
                 <Header as='h4'>Education</Header>
             </Divider>
-            {props.education.map(education => {
+            {props.educations.map(education => {
                 return (
                     <div style={{marginBottom: 50}} key={education.id}>
                         <Header as='h3'>{education.university}</Header>

@@ -9,14 +9,7 @@ export const API = 'http://localhost:3000'
 class App extends React.Component {
   
   state = {
-    currentUser: {},
-    activeItem: ""
-  }
-  
-  setActive = (name) => {
-    this.setState({
-      activeItem: name
-    })
+    currentUser: {}
   }
 
   setUser = (user) => {
@@ -26,13 +19,13 @@ class App extends React.Component {
   }
 
   render() {
+    console.log("in app state = ", this.state)
     return (
       <div>
         <Nav 
         currentUser={this.state.currentUser} 
         setUser={this.setUser} 
-        setActive={this.setActive} 
-        activeItem={this.state.activeItem} />
+        />
         <Main 
         currentUser={this.state.currentUser} 
         setUser={this.setUser} />
