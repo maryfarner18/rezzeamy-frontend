@@ -66,23 +66,25 @@ class FormContainer extends Component {
                       errors: json.errors
                   })
               }
-
+              // 
                 let userId = json.data.user.id
                 const {profile_image, resume} = this.state.form.user
                 console.log(profile_image, resume)
-
-                let formData = new FormData()
-                formData.append("profile_image", profile_image)
-                formData.append("resume", resume)
-
-                fetch(`${API}/users/${userId}`, {
-                    method: "PATCH",
-                    body: {
-                        formData
-                    }
-                })
-                .then(resp => resp.json())
-                .then(console.log)
+                if (profile_image && resume) {
+                    let formData = new FormData()
+                    formData.append("profile_image", profile_image, `Profile${userId}Image.jpg`)
+                    formData.append("resume", resume, `Resume${userId}.pdf`)
+                    console.dir(formData)
+    
+                    fetch(`${API}/users/${userId}/files`, {
+                        method: "POST",
+                        body: {
+                            formData
+                        }
+                    })
+                    .then(resp => resp.json())
+                    .then(console.log)
+                }
             })
             .catch(console.log)
         })
