@@ -12,10 +12,40 @@ class App extends React.Component {
     currentUser: {}
   }
 
-  setUser = (user) => {
+  setUser = (data) => {
     this.setState({
-      currentUser: {...user}
+      currentUser: {...data}
+    }, () => {
+
+      if (!!data.user) {
+        localStorage.user_id = data.user.id
+      } else {
+        localStorage.removeItem("user_id")
+      }
+    }
+    )
+  }
+  
+  componentDidMount() {
+    const user_id = localStorage.user_id
+
+    if (user_id) {
+      fetch(`${API}/auto_login`, {
+        headers: {
+          "Authorization": user_id
+        }
+      })
+      .then(res => res.json())
+      .then(json => {
+        console.log("JSON response: ", json)
+        if (json.errors) {
+          alert(json.errors)
+        } else {
+          this.setUser(json.data)
+        }
     })
+      .catch(err => console.log("errors: ", err))
+    } 
   }
 
   render() {

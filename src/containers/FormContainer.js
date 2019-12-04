@@ -40,13 +40,13 @@ class FormContainer extends Component {
             }
         }, () => {
             fetch(`${API}/users`, {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accepts: "application/json"
-                },
-                body: JSON.stringify(this.state.form)
-                })
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                accepts: "application/json"
+            },
+            body: JSON.stringify(this.state.form)
+            })
             .then(resp => resp.json())   
            .then(json => {
               console.log(json)
@@ -66,28 +66,42 @@ class FormContainer extends Component {
                       errors: json.errors
                   })
               }
-              
-                // let userId = data.user.id
-                // fetch(`${API}/users/${userId}`, {
-                //     method: "PATCH",
-                //     body: {
-                //         profile_image: this.state.profile_image,
-                //         resume: this.state.resume
-                //     }
-                // })
-                // .then(resp => resp.json())
-                // .then(console.log)
+
+                let userId = json.data.user.id
+                const {profile_image, resume} = this.state.form.user
+                console.log(profile_image, resume)
+
+                let formData = new FormData()
+                formData.append("profile_image", profile_image)
+                formData.append("resume", resume)
+
+                fetch(`${API}/users/${userId}`, {
+                    method: "PATCH",
+                    body: {
+                        formData
+                    }
+                })
+                .then(resp => resp.json())
+                .then(console.log)
             })
             .catch(console.log)
-        }
-    )}
+        })
+    }
 
-//     handleFileChange = (accessor, value) => {
-//         this.setState({
-//             [accessor]: value
-//         }
-//         )
-//     }
+    handleFileChange = (accessor, value) => {
+        this.setState((prevState) => (
+            {
+                form: {
+                    ...prevState.form,
+                    user: {
+                        ...prevState.form.user,
+                        [accessor]: value
+                    }
+                }
+            }
+        )
+        )
+    }
 
     handleChange = (key, subkey, value) => {
         if(key === "user"){
@@ -154,7 +168,7 @@ class FormContainer extends Component {
         const {user, addresses, educations, work_experiences, skills, projects, websites} = this.state.form
         switch (this.state.step){
             case 1:
-                return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
+                return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleFileChange={this.handleFileChange} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
                 
             case 2:
                 return <FormPart formType="addresses" info={addresses[addresses.length -1 ]} labels={LABELS.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
