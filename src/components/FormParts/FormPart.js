@@ -5,21 +5,32 @@ const FormPart = (props) =>{
 
     const renderFields = () =>{
         let keys = Object.keys(props.info)
-        console.log("props labels = ", props.labels)
-        console.log("props info", props.info)
         return keys.map( thisKey => {
-            console.log("looking at ", thisKey)
-            if (props.labels[thisKey].hide) return <Fragment />
-            
+            if (props.labels[thisKey].hide) return <Fragment key={thisKey}/>
+        
             const {label, type} = props.labels[thisKey]
-            return <Form.Field key={thisKey}>
-                    <label>{label}</label>
-                    <input onChange={handleChange}  
-                        value={props.info[thisKey]} 
-                        name={thisKey}
-                        type={type}
-                        />
-                </Form.Field>
+
+            let returnJsx = ''
+            if (type === 'file') {
+                return <Form.Field key={thisKey}>
+                        <label>{label}</label>
+                        <input onChange={handleFileChange}  
+                            // value={props.info[thisKey]} 
+                            name={thisKey}
+                            type={type}
+                            />
+                        </Form.Field>
+            } else {
+                return <Form.Field key={thisKey}>
+                        <label>{label}</label>
+                        <input onChange={handleChange}  
+                            value={props.info[thisKey]} 
+                            name={thisKey}
+                            type={type}
+                            />
+                        </Form.Field>
+               
+            }
         })
     }
     
@@ -33,7 +44,6 @@ const FormPart = (props) =>{
     }
 
     const saveAndSubmit = (e) => {
-        console.log("HERE SUBMITTING")
         e.preventDefault()
         props.submitForm()
     

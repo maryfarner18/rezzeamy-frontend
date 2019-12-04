@@ -13,8 +13,10 @@ class Main extends Component {
     }
 
     renderForm = () =>{
-        if(this.props.currentUser.user_slug) return <Redirect to='/:user_slug'/>
-        return <FormContainer setUser={this.props.setUser}/>
+        console.log("current user ", this.props.currentUser)
+        if(!!this.props.currentUser.user) return <FormContainer step={8} currentUser={this.props.currentUser} setUser={this.props.setUser}/> //<Redirect to={`/${this.props.currentUser.user.user_slug}`}/>
+        console.log("ya gere  ", this.props.currentUser.user)
+        return <FormContainer currentUser={this.props.currentUser} setUser={this.props.setUser} step={1}/>
     }
 
     renderProfile= (routerProps) =>{
@@ -23,7 +25,8 @@ class Main extends Component {
     }
     
     renderLanding = () =>{
-        return <Landing currentUser={this.props.user} setUser={this.props.setUser} handleLogin={this.props.handleLogin}/>
+        if(!!this.props.currentUser.user) return <Redirect to={`/${this.props.currentUser.user.user_slug}`}/>
+        return <Landing currentUser={this.props.currentUser} setUser={this.props.setUser} handleLogin={this.props.handleLogin}/>
     }
     
     renderNotFound = () =>{

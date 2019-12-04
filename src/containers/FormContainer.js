@@ -4,17 +4,14 @@ import FormBar from '../components/FormParts/FormBar'
 import SuccessForm from '../components/FormParts/SuccessForm'
 import FormPart from '../components/FormParts/FormPart'
 
-import {Step, Segment} from 'semantic-ui-react'
-
+import {Step, Segment, Grid} from 'semantic-ui-react'
 import {API} from '../App'
-
 import $ from 'jquery';
-
 import {FIELD_OBJ, LABELS} from './FormData'
 
 class FormContainer extends Component {
     state = {
-        step: 1,
+        step: this.props.step,
         form: {
             user: {...FIELD_OBJ.user}, 
             work_experiences: [{...FIELD_OBJ.work_experiences}],
@@ -24,47 +21,87 @@ class FormContainer extends Component {
             websites: [{...FIELD_OBJ.websites}],
             addresses: [{...FIELD_OBJ.addresses}]
         },
+        errors: ''
     }
 
-    submitForm = () =>{
-    
-        fetch(`${API}/users`, {
+    slugify = () =>{
+        return `${this.state.form.user.first_name}-${this.state.form.user.last_name}`
+    }
+
+    submitForm = () => {
+      
+        this.setState({
+            form: {
+                ...this.state.form,
+                user: {
+                    ...this.state.form.user,
+                    user_slug: this.slugify()
+                }
+            }
+        }, () => {
+            fetch(`${API}/users`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
                 accepts: "application/json"
             },
             body: JSON.stringify(this.state.form)
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log("GOT BACK: ", data)
-            if(data.user.username !== "undefined"){
-                console.log("setting username in app to ", data.user)
-                this.props.setUser(data.user)
-            }
-            this.nextStep()
-            // let userId = data.user.id
-            // fetch(`${API}/users/${userId}`, {
-            //     method: "PATCH",
-            //     body: {
-            //         profile_image: this.state.profile_image,
-            //         resume: this.state.resume
-            //     }
-            // })
-            // .then(resp => resp.json())
-            // .then(console.log)
-        })
-        .catch(console.log)
+            })
+            .then(resp => resp.json())   
+           .then(json => {
+              console.log(json)
+              if(json.data) {
+                console.log(json)
+                console.log("setting user")
+                this.props.setUser(json.data)
+                console.log("go to next step")
+                this.nextStep()
+                
+                // No need to redirect here, this will conditonally re-render home
+                
+              } else {
+                  this.props.setUser({})
+                  this.nextStep()
+                  this.setState({
+                      errors: json.errors
+                  })
+              }
 
+                let userId = json.data.user.id
+                const {profile_image, resume} = this.state.form.user
+                console.log(profile_image, resume)
+
+                let formData = new FormData()
+                formData.append("profile_image", profile_image)
+                formData.append("resume", resume)
+
+                fetch(`${API}/users/${userId}`, {
+                    method: "PATCH",
+                    body: {
+                        formData
+                    }
+                })
+                .then(resp => resp.json())
+                .then(console.log)
+            })
+            .catch(console.log)
+        })
     }
 
-//     handleFileChange = (accessor, value) => {
-//         this.setState({
-//             [accessor]: value
-//         }
-//         )
-//     }
+    handleFileChange = (accessor, value) => {
+        this.setState((prevState) => (
+            {
+                form: {
+                    ...prevState.form,
+                    user: {
+                        ...prevState.form.user,
+                        [accessor]: value
+                    }
+                }
+            }
+        )
+        )
+    }
 
     handleChange = (key, subkey, value) => {
         if(key === "user"){
@@ -86,12 +123,12 @@ class FormContainer extends Component {
                 form: {
                     ...this.state.form,
                     [key]: this.state.form[key].map((obj, index) => {
-                                if(index === len - 1){
-                                    return {...obj, [subkey]: value}
-                                }else{
-                                    return obj
-                                }
-                            })
+                            if(index === len - 1){
+                                return {...obj, [subkey]: value}
+                            }else{
+                                return obj
+                            }
+                        })
                 } 
             })
         }
@@ -131,7 +168,7 @@ class FormContainer extends Component {
         const {user, addresses, educations, work_experiences, skills, projects, websites} = this.state.form
         switch (this.state.step){
             case 1:
-                return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
+                return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleFileChange={this.handleFileChange} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
                 
             case 2:
                 return <FormPart formType="addresses" info={addresses[addresses.length -1 ]} labels={LABELS.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
@@ -152,38 +189,28 @@ class FormContainer extends Component {
                 return <FormPart formType="websites" info={websites[websites.length -1 ]} labels={LABELS.websites} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore} submitForm={this.submitForm}/>
                 
             case 8:
-                return <SuccessForm currentUsername={this.props.currentUser.username}/>
+                // need to do something here about error handling
+                return <SuccessForm currentUserSlug={this.props.currentUser.user.user_slug}/>
+                
             default:
                 break; 
         }
     }
 
-    // componentDidUpdate(){
-    //     this.setState({
-    //         form: {
-    //             ...this.state.form,
-    //             user: {
-    //                 ...this.state.user,
-    //                 ...this.props.currentUser
-    //             }
-    //         }
-    //     })
-    // }
-
-    render() {
-        console.log("form state = ", this.state)
-        
+    render() {       
         return (
-            <React.Fragment>
-            <Step.Group attached="top" widths={7} size='mini'>
-                <FormBar/>
-            </Step.Group>
+            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+                <Grid.Column textAlign='left' style={{ maxWidth: 1024 }}>
+                    <Step.Group attached="top" widths={7} size='mini'>
+                        <FormBar/>
+                    </Step.Group>
 
-            <Segment attached>
-                {this.renderForm()}
-            </Segment>
+                    <Segment attached>
+                        {this.renderForm()}
+                    </Segment>
 
-            </React.Fragment>
+                </Grid.Column>
+            </Grid>
         )
 
     }

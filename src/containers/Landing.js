@@ -11,15 +11,12 @@ class Landing extends Component {
 
     render() {
         return (
-            <Grid columns={2} divided>
-                <Grid.Row>
-                    <Grid.Column>
-                        <Login handleLogin={this.props.handleLogin}></Login>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Link to="/setup">Get Started!</Link>
-                    </Grid.Column>
-                </Grid.Row>
+            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle' celled>
+                <Grid.Column textAlign='left' style={{ maxWidth: 512 }} color={"teal"}>
+                    <Grid.Row>
+                         <Login setUser={this.props.setUser}></Login>
+                    </Grid.Row>
+                </Grid.Column>
             </Grid>
             
 
