@@ -4,7 +4,7 @@ import FormBar from '../components/FormParts/FormBar'
 import SuccessForm from '../components/FormParts/SuccessForm'
 import FormPart from '../components/FormParts/FormPart'
 
-import {Step, Segment} from 'semantic-ui-react'
+import {Step, Segment, Grid} from 'semantic-ui-react'
 
 import {API} from '../App'
 
@@ -26,37 +26,48 @@ class FormContainer extends Component {
         },
     }
 
+    slugify = () =>{
+        return `${this.state.form.user.first_name}-${this.state.form.user.last_name}`
+    }
+
     submitForm = () =>{
-    
-        fetch(`${API}/users`, {
+        this.setState({
+            form: {
+                ...this.state.form,
+                user: {
+                    ...this.state.form.user,
+                    user_slug: this.slugify()
+                }
+            }
+        }, fetch(`${API}/users`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
                 accepts: "application/json"
             },
             body: JSON.stringify(this.state.form)
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log("GOT BACK: ", data)
-            if(data.user.username !== "undefined"){
-                console.log("setting username in app to ", data.user)
-                this.props.setUser(data.user)
-            }
-            this.nextStep()
-            // let userId = data.user.id
-            // fetch(`${API}/users/${userId}`, {
-            //     method: "PATCH",
-            //     body: {
-            //         profile_image: this.state.profile_image,
-            //         resume: this.state.resume
-            //     }
-            // })
-            // .then(resp => resp.json())
-            // .then(console.log)
-        })
-        .catch(console.log)
-
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log("GOT BACK: ", data)
+                if(data.user.username !== "undefined"){
+                    console.log("setting username in app to ", data.user)
+                    this.props.setUser(data.user)
+                }
+                this.nextStep()
+                // let userId = data.user.id
+                // fetch(`${API}/users/${userId}`, {
+                //     method: "PATCH",
+                //     body: {
+                //         profile_image: this.state.profile_image,
+                //         resume: this.state.resume
+                //     }
+                // })
+                // .then(resp => resp.json())
+                // .then(console.log)
+            })
+            .catch(console.log)
+        )
     }
 
 //     handleFileChange = (accessor, value) => {
@@ -174,16 +185,18 @@ class FormContainer extends Component {
         console.log("form state = ", this.state)
         
         return (
-            <React.Fragment>
-            <Step.Group attached="top" widths={7} size='mini'>
-                <FormBar/>
-            </Step.Group>
+            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+                <Grid.Column textAlign='left' style={{ maxWidth: 1024 }}>
+                    <Step.Group attached="top" widths={7} size='mini'>
+                        <FormBar/>
+                    </Step.Group>
 
-            <Segment attached>
-                {this.renderForm()}
-            </Segment>
+                    <Segment attached>
+                        {this.renderForm()}
+                    </Segment>
 
-            </React.Fragment>
+                </Grid.Column>
+            </Grid>
         )
 
     }

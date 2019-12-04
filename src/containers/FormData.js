@@ -3,9 +3,10 @@ const LABELS = {
     user: {
         id: {hide: true},
         "user_slug": {hide: true},
+        password: {label: "Create A Password", type: "password"},
         first_name: {label: "First Name", type:"text"}, 
         last_name: {label: "Last Name", type:"text"}, 
-        email: {label: "email", type:"text"},  
+        email: {label: "Email", type:"text"},  
         phone: {label: "Phone", type:"text"}, 
         resume: {label: "Resume", type:"file"}, 
         profile_image: {label: "Profile Pic", type:"file"}
@@ -54,7 +55,7 @@ const LABELS = {
 }
 
 const FIELD_OBJ = {
-    user: {id: "", user_slug: "", first_name: "", last_name: "", email: "", phone: "", resume: "", profile_image: ""},
+    user: {id: "", user_slug: "", email: "", password:"", first_name: "", last_name: "", phone: "", resume: "", profile_image: ""},
     educations: {id: "", university: "", degree: "", concentration: "", start: "", end: ""},
     websites: {id: "", link: ""},
     skills: {id: "", name: "", proficiency: ""},
