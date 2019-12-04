@@ -2,14 +2,6 @@ import React from 'react'
 import { Button, Form, Icon} from 'semantic-ui-react'
 
 const FormPart = (props) =>{
-    // PROPS
-    // formType = "user"
-    // info = object with keys and value = value;
-    // labels = object with keys and value = Label;
-    // prevStep
-    // nextStep 
-    // addMore 
-
 
     const renderFields = () =>{
         let keys = Object.keys(props.info)
@@ -34,7 +26,6 @@ const FormPart = (props) =>{
         console.log("HERE SUBMITTING")
         e.preventDefault()
         props.submitForm()
-       // this.props.nextStep()
     
     }
     
@@ -47,7 +38,6 @@ const FormPart = (props) =>{
         props.addMore(props.formType)
     }
 
-    
     const handleFileChange = (e) => {
         let stateAccessor = e.target.name
         let file = e.target.files[0]

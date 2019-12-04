@@ -37,7 +37,7 @@ class Example extends Component {
                 <Route path="/path1" render={this.renderPath1} />
                 <Route path="/path2" render={this.renderPath2} />
                 <Route exact path="/" render={this.renderIndex} />
-                <Route  render={this.render404} />
+                <Route render={this.render404} />
             </Switch>
         )
     }

@@ -20,7 +20,7 @@ export class SignUp extends Component {
   }
 
   redirect = () => {
-    this.props.history.push('/')
+    this.props.history.push('/setup')
   }
 
   handleSubmit = (event) => {

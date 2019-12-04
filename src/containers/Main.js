@@ -10,7 +10,6 @@ import { BrowserRouter, Switch, Route, withRouter } from 'react-router-dom'
 class Main extends Component {
 
     renderForm = () =>{
-        console.log("rendering form")
         return <FormContainer currentUser={this.props.currentUser} setUser={this.props.setUser}/>
     }
 
@@ -27,22 +26,19 @@ class Main extends Component {
     }
     
     renderNotFound = () =>{
-        console.log("rendering error")
         return <UhOh404/>
     }
 
     render() {
         return (
             <div>
-                <BrowserRouter>
-                    <Switch>
-                        <Route path="/:username-slug" render={this.renderProfile}/>
-                        <Route exact path="/setup" render={this.renderForm}/>
-                        <Route exact path="/" render={this.renderLanding }/>
-                        <Route exact path="/signup" render={this.renderSignUp }/>
-                        <Route render={this.renderNotFound}/>
-                    </Switch>
-                </BrowserRouter>
+                <Switch>
+                    <Route exact path="/setup" render={this.renderForm}/>
+                    <Route exact path="/" render={this.renderLanding }/>
+                    <Route exact path="/signup" render={this.renderSignUp }/>
+                    <Route path="/:username-slug" render={this.renderProfile}/>
+                    <Route render={this.renderNotFound}/>
+                </Switch>
             </div>
         )
     }

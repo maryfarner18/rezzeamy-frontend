@@ -1,28 +1,26 @@
 import React, { Component, Fragment } from 'react'
 import { Menu } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { NavLink, Link, Redirect } from 'react-router-dom'
 
 class Nav extends Component {
 
-    state = { activeItem: 'home' } //instead use props of app state
+    //state = { activeItem: 'home' } //instead use props of app state
 
-    handleItemClick = (e, { name }) => this.setState(() => ( // INSTEAD set app's route state
-        {
-            activeItem: name
-            //
-        }
-    ))
+    handleItemClick = (e, { name}) => {
+        this.props.setActive(name)
+    }
     
     render() {
 
-        const { activeItem } = this.state
-        const { currentUser, setUser } = this.props
+        console.log("props in Nav: ", this.props)
+
+        const { currentUser, setUser, activeItem } = this.props
         
         return (
             <div>
             <Menu pointing secondary>
                 <Menu.Item
-                    as={Link} to='/'
+                    as={NavLink} to='/'
                     name='home'
                     active={activeItem === 'home'}
                     onClick={this.handleItemClick}
@@ -30,10 +28,10 @@ class Nav extends Component {
                     Home
                 </Menu.Item>
                 {
-                    currentUser ? 
+                currentUser.username ? 
                     <Fragment>
                         <Menu.Item
-                            as={Link} to={`/${currentUser}`}
+                            as={Link} to={`/${currentUser.username}`}
                             name='profile'
                             active={activeItem === 'profile'}
                             onClick={this.handleItemClick}
@@ -45,7 +43,7 @@ class Nav extends Component {
                             as={Link} to='/'
                             name='logout'
                             active={activeItem === 'logout'}
-                            onClick={() => setUser("")}
+                            onClick={() => setUser({})}
                             />
                         </Menu.Menu>
                     </Fragment>
@@ -70,6 +68,7 @@ class Nav extends Component {
                             </Menu.Item>
                         </Menu.Menu>
                     </Fragment>
+
                 }
             </Menu>
             </div>

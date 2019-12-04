@@ -8,21 +8,27 @@ class App extends React.Component {
   
   state = {
     isLoggedIn: false,
-    user: null,
-    route: "" // "profile, setup, landing
+    currentUser: {username: "maryfarner"},
+    activeItem: ""
+  }
+  
+  setActive = (name) => {
+    this.setState({
+      activeItem: name
+    })
   }
 
   handleLogin = (data) => {
     this.setState({
       isLoggedIn: true,
-      user: data.user.username
+      currentUser: data.user.username
     })
   }
 
   handleLogout = () => {
     this.setState({
     isLoggedIn: false,
-    user: ""
+    currentUser: {}
     })
   }
 
@@ -42,7 +48,7 @@ class App extends React.Component {
 
   setUser = (user) => {
     this.setState({
-      user: {...user}
+      currentUser: {...user}
     })
   }
 
@@ -53,8 +59,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav currentUser={this.state.user} setUser={this.setUser} />
-        <Main currentUser={this.state.user} setUser={this.setUser} handleLogin={this.handleLogin} loginStatus={this.loginStatus}/>
+        <Nav currentUser={this.state.currentUser} setUser={this.setUser} setActive={this.setActive} activeItem={this.state.activeItem}/>
+        <Main currentUser={this.state.currentUser} setUser={this.setUser} handleLogin={this.handleLogin} loginStatus={this.loginStatus}/>
       </div>
     );
   }

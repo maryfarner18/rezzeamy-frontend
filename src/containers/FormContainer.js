@@ -6,6 +6,8 @@ import FormPart from '../components/FormParts/FormPart'
 
 import {Step, Segment} from 'semantic-ui-react'
 
+import {Redirect} from 'react-router-dom'
+
 import $ from 'jquery';
 
 const LABELS = {
@@ -32,8 +34,7 @@ class FormContainer extends Component {
     state = {
         step: 1,
         form: {
-
-            user: {...FIELD_OBJ.user},
+            user: {...FIELD_OBJ.user, ...this.props.currentUser},
             work_experiences: [{...FIELD_OBJ.work_experiences}],
             skills: [{...FIELD_OBJ.skills}],
             educations: [{...FIELD_OBJ.educations}],
@@ -44,15 +45,15 @@ class FormContainer extends Component {
     }
 
     submitForm = () =>{
-        this.setState(previousState => ({ 
-            form: {
-                ...this.state.form,
-                user: {
-                    ...this.state.form.user,
-                    username: (previousState.form.user.first_name + previousState.form.user.last_name).toLowerCase()
-                }
-            }  
-        }), () => {
+        // this.setState(previousState => ({ 
+        //     form: {
+        //         ...this.state.form,
+        //         user: {
+        //             ...this.state.form.user,
+        //             username: (previousState.form.user.first_name + previousState.form.user.last_name).toLowerCase()
+        //         }
+        //     }  
+        // }), () => {
 
             fetch("http://localhost:3000/users", {
                 method: "POST",
@@ -83,7 +84,7 @@ class FormContainer extends Component {
             })
             .catch(console.log)
 
-        })
+        // })
     }
 
 //     handleFileChange = (accessor, value) => {
@@ -185,19 +186,38 @@ class FormContainer extends Component {
         }
     }
 
+    componentDidUpdate(){
+        this.setState({
+            form: {
+                ...this.state.form,
+                user: {
+                    ...this.state.user,
+                    ...this.props.currentUser
+                }
+            }
+        })
+    }
+
     render() {
-        return (
-            <React.Fragment>
-            <Step.Group attached="top" widths={7} size='mini'>
-                <FormBar/>
-            </Step.Group>
+        console.log("form state = ", this.state)
+        if(!this.props.currentUser.username){
+            return <Redirect to="/signup"/>
 
-            <Segment attached>
-                {this.renderForm()}
-            </Segment>
+        }{
+            return (
+                <React.Fragment>
+                <Step.Group attached="top" widths={7} size='mini'>
+                    <FormBar/>
+                </Step.Group>
+    
+                <Segment attached>
+                    {this.renderForm()}
+                </Segment>
+    
+                </React.Fragment>
+            )
 
-            </React.Fragment>
-        )
+        }
     }
 }
 
