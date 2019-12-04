@@ -4,6 +4,8 @@ import  {withRouter} from 'react-router-dom'
 import Main from './containers/Main'
 import Nav from './containers/Nav'
 
+export const API = 'http://localhost:3000'
+
 class App extends React.Component {
   
   state = {
@@ -21,25 +23,6 @@ class App extends React.Component {
     this.setState({
       currentUser: {...user}
     })
-  }
-
-  // loginStatus = () => {
-  //   fetch('http://localhost:3000/logged_in', {
-  //       credentials: 'include'
-  //   })   
-  //  .then(response => {
-  //     if (response.data.logged_in) {
-  //       this.handleLogin(response)
-  //     } else {
-  //       this.handleLogout()
-  //     }
-  //   })
-  //   .catch(error => console.log('api errors:', error))
-  // }
-
-
-  componentDidMount() {
-    // this.loginStatus()
   }
 
   render() {

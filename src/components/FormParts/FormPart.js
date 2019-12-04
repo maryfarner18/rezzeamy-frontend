@@ -1,15 +1,25 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import { Button, Form, Icon} from 'semantic-ui-react'
 
 const FormPart = (props) =>{
 
     const renderFields = () =>{
         let keys = Object.keys(props.info)
+        console.log("props labels = ", props.labels)
+        console.log("props info", props.info)
         return keys.map( thisKey => {
+            console.log("looking at ", thisKey)
+            if (props.labels[thisKey].hide) return <Fragment />
+            
+            const {label, type} = props.labels[thisKey]
             return <Form.Field key={thisKey}>
-                <label>{props.labels[thisKey]}</label>
-                <input onChange={handleChange} type="text" value={props.info[thisKey]} name={thisKey}/>
-            </Form.Field>
+                    <label>{label}</label>
+                    <input onChange={handleChange}  
+                        value={props.info[thisKey]} 
+                        name={thisKey}
+                        type={type}
+                        />
+                </Form.Field>
         })
     }
     

@@ -3,8 +3,8 @@ import { Container, Header } from 'semantic-ui-react'
 
 const About = (props) => {
 
-    let fullName = `${props.firstName} ${props.lastName}`
-
+    const fullName = `${props.showUser.first_name} ${props.showUser.last_name}`
+    const {phone, email } = props.showUser
     return (
         <Container text>
             <Header
@@ -18,7 +18,7 @@ const About = (props) => {
             />
             <Header
                 as='h2'
-                content={`${props.email}`}
+                content={email}
                 style={{
                     fontSize: '20px',
                     fontWeight: 'normal',
@@ -27,7 +27,7 @@ const About = (props) => {
             />
             <Header
                 as='h2'
-                content={`${props.phone}`}
+                content={phone}
                 style={{
                     fontSize: '20px',
                     fontWeight: 'normal',

@@ -4,21 +4,22 @@ import Landing from './Landing'
 import UhOh404 from '../components/UhOh404'
 import FormContainer from './FormContainer'
 
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 
 class Main extends Component {
 
-    renderForm = () =>{
-        return <FormContainer 
-        currentUser={this.props.currentUser} 
-        setUser={this.props.setUser}
-        />
+    getUserFormInfo = () => {
+
     }
 
-    renderProfile= () =>{
-      return <ProfileContainer 
-      currentUser={this.props.currentUser} 
-      />
+    renderForm = () =>{
+         if(this.props.currentUser.user_slug) return <Redirect to='/:user_slug'/>
+        return <FormContainer setUser={this.props.setUser}/>
+    }
+
+    renderProfile= (routerProps) =>{
+        console.log("router props", routerProps)
+        return <ProfileContainer userslug={routerProps.match.params.userslug} />
     }
     
     renderLanding = () =>{
@@ -35,10 +36,12 @@ class Main extends Component {
     render() {
         return (
             <div>
+                
                 <Switch>
                     <Route exact path="/setup" render={this.renderForm}/>
                     <Route exact path="/" render={this.renderLanding }/>
-                    <Route path="/:username-slug" render={this.renderProfile}/>
+                    <Route exact path="/404" render={this.renderNotFound}/>
+                    <Route path="/:userslug" render={this.renderProfile}/>
                     <Route render={this.renderNotFound}/>
                 </Switch>
             </div>
