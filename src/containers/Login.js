@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Form } from 'semantic-ui-react'
+import {API} from '../App'
 
 export class Login extends Component {
 
@@ -30,7 +31,7 @@ export class Login extends Component {
         username, email, password
     }
 
-    fetch('http://localhost:3000/login', {
+    fetch(`${API}/login`, {
         method: 'POST',
         credentials: 'include',
         headers: {

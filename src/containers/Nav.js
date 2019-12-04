@@ -31,7 +31,7 @@ class Nav extends Component {
                 currentUser.username ? 
                     <Fragment>
                         <Menu.Item
-                            as={Link} to={`/${currentUser.username}`}
+                            as={Link} to={`/:${currentUser.userslug}`}
                             name='profile'
                             active={activeItem === 'profile'}
                             onClick={this.handleItemClick}
