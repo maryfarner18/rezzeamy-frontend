@@ -28,10 +28,10 @@ class Nav extends Component {
                     Home
                 </Menu.Item>
                 {
-                currentUser.username ? 
+                currentUser.user ? 
                     <Fragment>
                         <Menu.Item
-                            as={Link} to={`/${currentUser.username}`}
+                            as={Link} to={`/:${currentUser.user_slug}`}
                             name='profile'
                             active={activeItem === 'profile'}
                             onClick={this.handleItemClick}
