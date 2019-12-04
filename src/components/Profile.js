@@ -23,7 +23,7 @@ export default class Profile extends Component {
     }
 
     renderEditForm = () => {
-        return <EditForm {...user_profile.user} />
+        return <EditForm {...this.props.currentUser} />
     }
 
     renderAboutComponent = () => {
