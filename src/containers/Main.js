@@ -13,7 +13,7 @@ class Main extends Component {
     }
 
     renderProfile= () =>{
-      return <ProfileContainer currentUser={this.props.user} />
+      return <ProfileContainer currentUser={this.props.currentUser} />
     }
     
     renderLanding = () =>{
