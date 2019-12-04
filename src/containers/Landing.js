@@ -17,7 +17,7 @@ class Landing extends Component {
                         <Login handleLogin={this.props.handleLogin}></Login>
                     </Grid.Column>
                     <Grid.Column>
-                        <Link to="/signup">Get Started!</Link>
+                        <Link to="/setup">Get Started!</Link>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

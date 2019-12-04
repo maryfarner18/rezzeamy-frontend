@@ -186,39 +186,36 @@ class FormContainer extends Component {
         }
     }
 
-    componentDidUpdate(){
-        this.setState({
-            form: {
-                ...this.state.form,
-                user: {
-                    ...this.state.user,
-                    ...this.props.currentUser
-                }
-            }
-        })
-    }
+    // componentDidUpdate(){
+    //     this.setState({
+    //         form: {
+    //             ...this.state.form,
+    //             user: {
+    //                 ...this.state.user,
+    //                 ...this.props.currentUser
+    //             }
+    //         }
+    //     })
+    // }
 
     render() {
         console.log("form state = ", this.state)
-        if(!this.props.currentUser.username){
-            return <Redirect to="/signup"/>
+        
+        return (
+            <React.Fragment>
+            <Step.Group attached="top" widths={7} size='mini'>
+                <FormBar/>
+            </Step.Group>
 
-        }{
-            return (
-                <React.Fragment>
-                <Step.Group attached="top" widths={7} size='mini'>
-                    <FormBar/>
-                </Step.Group>
-    
-                <Segment attached>
-                    {this.renderForm()}
-                </Segment>
-    
-                </React.Fragment>
-            )
+            <Segment attached>
+                {this.renderForm()}
+            </Segment>
 
-        }
+            </React.Fragment>
+        )
+
     }
+    
 }
 
 export default FormContainer

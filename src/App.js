@@ -8,7 +8,7 @@ class App extends React.Component {
   
   state = {
     isLoggedIn: false,
-    currentUser: {username: "maryfarner"},
+    currentUser: {},
     activeItem: ""
   }
   

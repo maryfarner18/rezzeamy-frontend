@@ -20,7 +20,7 @@ class Nav extends Component {
             <div>
             <Menu pointing secondary>
                 <Menu.Item
-                    as={NavLink} to='/'
+                    as={Link} to='/'
                     name='home'
                     active={activeItem === 'home'}
                     onClick={this.handleItemClick}
@@ -57,16 +57,6 @@ class Nav extends Component {
                         >
                             Create A Profile!
                         </Menu.Item>
-                        <Menu.Menu position='right'>
-                            <Menu.Item
-                            as={Link} to='/signup'
-                            name='signup'
-                            active={activeItem === 'signup'}
-                            onClick={this.handleItemClick}
-                            >
-                                Sign Up!
-                            </Menu.Item>
-                        </Menu.Menu>
                     </Fragment>
 
                 }
