@@ -19,10 +19,10 @@ class ProfileContainer extends Component {
          loading: true
     }
     
-    handleEdit = (event) => {
+    submitEdit = (event) => {
         console.log('Submitting...', event)
         this.setState({
-            showUser: {...event}
+            showUser: {...event},
         }, () => this.submitPatch(event))
     }
 
@@ -36,7 +36,9 @@ class ProfileContainer extends Component {
             body: JSON.stringify(obj)
         })
         .then(resp => resp.json())
-        .then(console.log)
+        .then(data => {
+            return <Redirect to="/"/>
+        })
         .catch(err => console.log(err))
     }
 
@@ -78,7 +80,7 @@ class ProfileContainer extends Component {
     render() {
         console.log(this.state)
         return (
-            this.state.loading?  this.renderLoading() : <Profile showUser={this.state.showUser}  handleEdit={this.handleEdit} />
+            this.state.loading?  this.renderLoading() : <Profile showUser={this.state.showUser} edit={this.props.edit} submitEdit={this.submitEdit} />
         )
     }
 
