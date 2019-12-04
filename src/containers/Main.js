@@ -13,7 +13,7 @@ class Main extends Component {
     }
 
     renderForm = () =>{
-        if(this.props.currentUser.user_slug) return <Redirect to='/:user_slug'/>
+         if(this.props.currentUser.user_slug) return <Redirect to='/:user_slug'/>
         return <FormContainer setUser={this.props.setUser}/>
     }
 
@@ -23,7 +23,10 @@ class Main extends Component {
     }
     
     renderLanding = () =>{
-        return <Landing currentUser={this.props.user} setUser={this.props.setUser} handleLogin={this.props.handleLogin}/>
+        return <Landing 
+        currentUser={this.props.user} 
+        setUser={this.props.setUser} 
+        />
     }
     
     renderNotFound = () =>{

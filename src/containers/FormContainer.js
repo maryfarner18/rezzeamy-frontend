@@ -24,13 +24,15 @@ class FormContainer extends Component {
             websites: [{...FIELD_OBJ.websites}],
             addresses: [{...FIELD_OBJ.addresses}]
         },
+        errors: ''
     }
 
     slugify = () =>{
         return `${this.state.form.user.first_name}-${this.state.form.user.last_name}`
     }
 
-    submitForm = () =>{
+    submitForm = () => {
+      
         this.setState({
             form: {
                 ...this.state.form,
@@ -47,14 +49,21 @@ class FormContainer extends Component {
             },
             body: JSON.stringify(this.state.form)
             })
-            .then(resp => resp.json())
-            .then(data => {
-                console.log("GOT BACK: ", data)
-                if(data.user.username !== "undefined"){
-                    console.log("setting username in app to ", data.user)
-                    this.props.setUser(data.user)
-                }
-                this.nextStep()
+            .then(resp => resp.json())   
+           .then(json => {
+              console.log(json)
+              if(json.data) {
+                console.log(json)
+                this.props.setUser(json.data)
+                // No need to redirect here, this will conditonally re-render home
+                
+              } else {
+                  this.props.setUser({})
+                  this.setState({
+                      errors: json.errors
+                  })
+              }
+              this.nextStep()
                 // let userId = data.user.id
                 // fetch(`${API}/users/${userId}`, {
                 //     method: "PATCH",
@@ -163,26 +172,16 @@ class FormContainer extends Component {
                 return <FormPart formType="websites" info={websites[websites.length -1 ]} labels={LABELS.websites} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore} submitForm={this.submitForm}/>
                 
             case 8:
+                // need to do something here about error handling
                 return <SuccessForm currentUsername={this.props.currentUser.username}/>
+                
             default:
                 break; 
         }
     }
 
-    // componentDidUpdate(){
-    //     this.setState({
-    //         form: {
-    //             ...this.state.form,
-    //             user: {
-    //                 ...this.state.user,
-    //                 ...this.props.currentUser
-    //             }
-    //         }
-    //     })
-    // }
-
     render() {
-        console.log("form state = ", this.state)
+        // console.log("form state = ", this.state)
         
         return (
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>

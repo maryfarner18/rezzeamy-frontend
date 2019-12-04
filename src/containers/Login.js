@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { Form } from 'semantic-ui-react'
+
+import { Form, Button } from 'semantic-ui-react'
 import {API} from '../App'
+
 
 export class Login extends Component {
 
   state = {
-    username: '',
     email: '',
     password: '',
     errors: ''
@@ -17,18 +18,14 @@ export class Login extends Component {
     this.setState({
       [name]: value
     })
-  };
-
-  redirect = () => {
-      this.props.history.push('/')
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
-    const { username, email, password } = this.state
+    const { email, password } = this.state
 
-    let user = {
-        username, email, password
+    const user = {
+        email, password
     }
 
     fetch(`${API}/login`, {
@@ -41,13 +38,15 @@ export class Login extends Component {
         body: JSON.stringify(user)
     })
     .then( res => res.json() )
-    .then( data => {
-        if(data.logged_in) {
-            this.props.handleLogin(data)
-            this.redirect()
+    .then( json => {
+        if(json.data) {
+          console.log(json)
+            this.props.setUser(json.data)
+            // No need to redirect here, this will conditonally re-render home
         } else {
+            this.props.setUser({})
             this.setState({
-                errors: data.errors
+                errors: json.errors
             })
         }
     })
@@ -64,43 +63,37 @@ export class Login extends Component {
         </ul>
       </div>
     )
-  }
+  };
   
   render() {
-    const {username, email, password} = this.state
+    const { email, password } = this.state
     return (
       <div>
         <h1>Log In</h1>        
-        <form onSubmit={this.handleSubmit}>
-          <input
-            placeholder="username"
-            type="text"
-            name="username"
-            value={username}
-            onChange={this.handleChange}
-          />
-          <input
+        <Form onSubmit={this.handleSubmit}>
+          
+          <Form.Input
             placeholder="email"
             type="text"
             name="email"
             value={email}
             onChange={this.handleChange}
           />
-          <input
+          <Form.Input
             placeholder="password"
             type="password"
             name="password"
             value={password}
             onChange={this.handleChange}
           />         
-          <button placeholder="submit" type="submit">
+          <Button type="submit">
             Log In
-          </button>          
+          </Button>          
           <div>
             or <Link to='/signup'>sign up</Link>
           </div>
           
-         </form>
+         </Form>
          <div>
              {
                 this.state.errors ?
@@ -109,8 +102,8 @@ export class Login extends Component {
              }
          </div>
       </div>
-    );
-  }
-}
+    )
+  };
+};
 
 export default Login;
