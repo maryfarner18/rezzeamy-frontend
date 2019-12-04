@@ -42,6 +42,7 @@ class FormContainer extends Component {
             websites: [{...FIELD_OBJ.websites}],
             addresses: [{...FIELD_OBJ.addresses}]
         },
+        errors: ''
     }
 
     submitForm = () =>{
@@ -64,14 +65,21 @@ class FormContainer extends Component {
             body: JSON.stringify(this.state.form)
         })
         .then(resp => resp.json())
-        .then(response => {
+        .then(json => {
             
-            // if(data.errors)
-
-            this.props.setUser(response.data)
+            if(json.data) {
+                console.log(json)
+                  this.props.setUser(json.data)
+                  // No need to redirect here, this will conditonally re-render home
+              } else {
+                  this.props.setUser({})
+                  this.setState({
+                      errors: json.errors
+                  })
+              }
 
             this.nextStep()
-            // let userId = response.data.user.id
+            // let userId = json.data.user.id
             // fetch(`http://localhost:3000/users/${userId}`, {
             //     method: "PATCH",
             //     body: {
@@ -180,7 +188,9 @@ class FormContainer extends Component {
                 return <FormPart formType="websites" info={websites[websites.length -1 ]} labels={LABELS.websites} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange} addMore={this.addMore} submitForm={this.submitForm}/>
                 
             case 8:
+                // need to do something here about error handling
                 return <SuccessForm currentUsername={this.props.currentUser.username}/>
+                
             default:
                 break; 
         }
