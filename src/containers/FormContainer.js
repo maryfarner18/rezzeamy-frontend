@@ -6,35 +6,17 @@ import FormPart from '../components/FormParts/FormPart'
 
 import {Step, Segment} from 'semantic-ui-react'
 
-import {Redirect} from 'react-router-dom'
+import {API} from '../App'
 
 import $ from 'jquery';
 
-const LABELS = {
-    user: {first_name: "First Name", last_name: "Last Name", email: "Email", phone: "Phone", resume: "Resume", profile_image: "Profile Pic"},
-    educations: {university: "University", degree: "Decgree", concentration: "Concentration", start: "Start", end: "End"},
-    websites: {link: "Link"},
-    skills: {name: "Skill", proficiency: "Proficiency"},
-    projects: {title: "Project Title", link: "Link"},
-    work_experiences: {company: "Company", title: "Title", description: "Description", start: "Start", end:"End", city:"City", state:"State"},
-    addresses: {street1: "Street", street2: "Street 2", city: "City", state: "State", zip: "Zip", country: "Country"}
-}
-
-const FIELD_OBJ = {
-    user: {first_name: "", last_name: "", email: "", phone: "", resume: "", profile_image: ""},
-    educations: {university: "", degree: "", concentration: "", start: "", end: ""},
-    websites: {link: ""},
-    skills: {name: "", proficiency: ""},
-    projects: {title: "", link: ""},
-    work_experiences: {company: "", title: "", description: "", start: "", end:"", city:"", state:""},
-    addresses: {street1: "", street2: "", city: "", state: "", zip: "", country: ""}
-}
+import {FIELD_OBJ, LABELS} from './FormData'
 
 class FormContainer extends Component {
     state = {
         step: 1,
         form: {
-            user: {...FIELD_OBJ.user, ...this.props.currentUser},
+            user: {...FIELD_OBJ.user}, 
             work_experiences: [{...FIELD_OBJ.work_experiences}],
             skills: [{...FIELD_OBJ.skills}],
             educations: [{...FIELD_OBJ.educations}],
@@ -45,46 +27,36 @@ class FormContainer extends Component {
     }
 
     submitForm = () =>{
-        // this.setState(previousState => ({ 
-        //     form: {
-        //         ...this.state.form,
-        //         user: {
-        //             ...this.state.form.user,
-        //             username: (previousState.form.user.first_name + previousState.form.user.last_name).toLowerCase()
-        //         }
-        //     }  
-        // }), () => {
+    
+        fetch(`${API}/users`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                accepts: "application/json"
+            },
+            body: JSON.stringify(this.state.form)
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log("GOT BACK: ", data)
+            if(data.user.username !== "undefined"){
+                console.log("setting username in app to ", data.user)
+                this.props.setUser(data.user)
+            }
+            this.nextStep()
+            // let userId = data.user.id
+            // fetch(`${API}/users/${userId}`, {
+            //     method: "PATCH",
+            //     body: {
+            //         profile_image: this.state.profile_image,
+            //         resume: this.state.resume
+            //     }
+            // })
+            // .then(resp => resp.json())
+            // .then(console.log)
+        })
+        .catch(console.log)
 
-            fetch("http://localhost:3000/users", {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accepts: "application/json"
-                },
-                body: JSON.stringify(this.state.form)
-            })
-            .then(resp => resp.json())
-            .then(data => {
-                console.log("GOT BACK: ", data)
-                if(data.user.username !== "undefined"){
-                    console.log("setting username in app to ", data.user)
-                    this.props.setUser(data.user)
-                }
-                this.nextStep()
-                // let userId = data.user.id
-                // fetch(`http://localhost:3000/users/${userId}`, {
-                //     method: "PATCH",
-                //     body: {
-                //         profile_image: this.state.profile_image,
-                //         resume: this.state.resume
-                //     }
-                // })
-                // .then(resp => resp.json())
-                // .then(console.log)
-            })
-            .catch(console.log)
-
-        // })
     }
 
 //     handleFileChange = (accessor, value) => {

@@ -23,39 +23,33 @@ export default class Profile extends Component {
     }
 
     renderEditForm = () => {
-        return <EditForm {...this.props.currentUser} />
+        return <EditForm {...this.props.showUser} />
     }
 
     renderAboutComponent = () => {
-        return <About 
-                    firstName={this.props.currentUser.first_name} 
-                    lastName={this.props.currentUser.last_name} 
-                    email={this.props.currentUser.email} 
-                    phone={this.props.currentUser.phone} 
-
-                />
+        return <About showUser={this.props.showUser.user}/>
     }
 
     renderWorkExperienceComponent = () => {
-        return <WorkExperience about={this.props.currentUser.work_experiences} />
+        return <WorkExperience about={this.props.showUser.work_experiences} />
     }
 
     renderSkillsComponent = () => {
-        return <Skills skills={this.props.currentUser.skills} />
+        return <Skills skills={this.props.showUser.skills} />
     }
 
     renderEducationComponent = () => {
-        return <Education education={this.props.currentUser.education} />
+        return <Education education={this.props.showUser.education} />
     }
 
     renderProjectsComponent = () => {
-        return <Projects projects={this.props.currentUser.projects} />
+        return <Projects projects={this.props.showUser.projects} />
     }
 
     renderContactComponent = () => {
         return <Contact 
-                    resources={this.props.currentUser.websites} 
-                    addresses={this.props.currentUser.addresses} 
+                    resources={this.props.showUser.websites} 
+                    addresses={this.props.showUser.addresses} 
                 />
     }
 

@@ -4,20 +4,23 @@ import  {withRouter} from 'react-router-dom'
 import Main from './containers/Main'
 import Nav from './containers/Nav'
 
+export const API = 'http://localhost:3000'
+
 class App extends React.Component {
   
   state = {
-    isLoggedIn: false,
+    isLoggedIn: true,
     currentUser: {
-      "id": 1,
-      "user_slug": "mary-farner",
-      "username": "maryfarner",
-      "first_name": "Mary",
-      "last_name": "Farner",
-      "phone": "2692671103",
-      "email": "maryfarner@gmail.com",
-      "profile_image": null,
-      "resume": null,
+      user: {
+        "id": 1,
+        "user_slug": "mary-farner",
+        "first_name": "Mary",
+        "last_name": "Farner",
+        "phone": "2692671103",
+        "email": "maryfarner@gmail.com",
+        "profile_image": null,
+        "resume": null,
+      },
       "work_experiences": [
         {
           "id": 2,
@@ -52,7 +55,7 @@ class App extends React.Component {
           "proficiency": "Advanced"
         }
       ],
-      "education": [
+      "educations": [
         {
           "id": 1,
           "university": "Yale",
@@ -121,10 +124,10 @@ class App extends React.Component {
     })
   }
 
-  handleLogin = (data) => {
+  handleLogin = (response) => {
     this.setState({
       isLoggedIn: true,
-      currentUser: data.user
+      currentUser: response.data
     })
   }
 
@@ -136,7 +139,7 @@ class App extends React.Component {
   }
 
   loginStatus = () => {
-    fetch('http://localhost:3001/logged_in', {
+    fetch(`${API}/logged_in`, {
         credentials: 'include'
     })   
    .then(response => {
@@ -155,9 +158,9 @@ class App extends React.Component {
     })
   }
 
-  componentDidMount() {
-    this.loginStatus()
-  }
+  // componentDidMount() {
+  //   this.loginStatus()
+  // }
 
   render() {
     return (
