@@ -84,6 +84,7 @@ export default class EditForm extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit} style={{ margin: 10 }}>
+        <h3>Edit Profile</h3>
         <Form.Field>
           <label>First Name</label>
           <Form.Input

@@ -7,7 +7,8 @@ const Footer = () => {
 
   return (
     <footer>
-      <h3 onClick={handleClick}>Go To Top</h3>
+      <h4 onClick={handleClick}>Go To Top</h4>
+      <h5><em>Powered by rezzemay™️</em>  </h5>
     </footer>
   );
 };

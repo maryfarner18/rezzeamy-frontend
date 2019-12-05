@@ -13,6 +13,7 @@ import {API} from '../App'
 class Profile extends Component {
   handleEditButtonClick = () => {
     this.props.history.push('/edit');
+    window.scrollTo(0, 0);
   };
 
   handleDeleteButtonClick = () =>{

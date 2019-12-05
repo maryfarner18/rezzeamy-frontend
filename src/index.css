@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+h1.title {
+  text-align: center;
+  font-family: 'Sulphur Point', sans-serif;
+}
 
 .app {
   display: flex;
@@ -33,7 +37,7 @@ code {
   
 }
 
-footer h3{
+footer > *{
     width: 100%;
     text-align: center;
  }

@@ -5,18 +5,20 @@ import Login from './Login';
 
 const Landing = props => {
   return (
-    <Grid
-      textAlign="center"
-      style={{ height: '100vh' }}
-      verticalAlign="middle"
-      celled
-    >
-      <Grid.Column textAlign="left" style={{ maxWidth: 512 }} color={'grey'}>
-        <Grid.Row>
-          <Login setUser={props.setUser} />
-        </Grid.Row>
-      </Grid.Column>
-    </Grid>
+    <>
+      <Grid
+        textAlign="center"
+        style={{ height: '100vh' }}
+        verticalAlign="middle"
+        celled
+        >
+        <Grid.Column textAlign="left" style={{ maxWidth: 512 }} color={'grey'}>
+          <Grid.Row>
+            <Login setUser={props.setUser} />
+          </Grid.Row>
+        </Grid.Column>
+      </Grid>
+    </>
   );
 };
 

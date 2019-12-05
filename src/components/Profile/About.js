@@ -23,6 +23,7 @@ const About = props => {
           fontSize: '60px',
           fontWeight: 'normal',
           marginTop: 100,
+          fontFamily: 'Sulphur Point'
         }}
       />
       <Header
