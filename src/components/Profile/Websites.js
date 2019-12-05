@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
 
 class Websites extends Component {
+  
   getIconName = link => {
     let base = link.split('.')[1].toLowerCase();
     switch (base) {
@@ -33,7 +34,7 @@ class Websites extends Component {
   renderIcons = () => {
     return this.props.sites.map(site => {
       return (
-        <Grid.Column textAlign="left" key={site.id}>
+        <Grid.Column textAlign="center" key={site.id}>
           <a target="_blank" rel="noopener noreferrer" href={site.link}>
             <Icon size="large" name={this.getIconName(site.link)} />{' '}
           </a>
@@ -53,6 +54,8 @@ class Websites extends Component {
       </Grid>
     );
   }
+  
 }
+
 
 export default Websites;
