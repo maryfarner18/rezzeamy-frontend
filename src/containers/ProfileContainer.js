@@ -62,10 +62,6 @@ class ProfileContainer extends Component {
       });
   }
 
-  setUser = json => {
-    this.setState({ showUser: json });
-  };
-
   renderLoading = () => {
     return (
       <Segment style={{ minHeight: 100 }}>
@@ -85,6 +81,7 @@ class ProfileContainer extends Component {
         edit={this.props.edit}
         submitEdit={this.submitEdit}
         currentUser={this.props.currentUser}
+        setUser={this.props.setUser}
       />
     );
   }

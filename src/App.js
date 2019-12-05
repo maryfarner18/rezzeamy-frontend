@@ -6,7 +6,7 @@ import Nav from './containers/Nav';
 import Footer from './containers/Footer';
 
 export const API = 'http://localhost:3000';
-
+ 
 class App extends React.Component {
   state = {
     step: 1,
@@ -28,6 +28,7 @@ class App extends React.Component {
         if (!!data.user) {
           localStorage.user_id = data.user.id;
         } else {
+ 
           localStorage.removeItem('user_id');
         }
       },

@@ -34,6 +34,7 @@ class Websites extends Component {
   renderIcons = () => {
     return this.props.sites.map(site => {
       return (
+        site.link === ""? null :
         <Grid.Column textAlign="center" key={site.id}>
           <a target="_blank" rel="noopener noreferrer" href={site.link}>
             <Icon size="large" name={this.getIconName(site.link)} />{' '}
