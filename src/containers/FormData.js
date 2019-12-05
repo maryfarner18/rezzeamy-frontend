@@ -6,8 +6,8 @@ const LABELS = {
         password: {label: "Create A Password", type: "password"},
         first_name: {label: "First Name", type:"text"}, 
         last_name: {label: "Last Name", type:"text"}, 
-        email: {label: "Email", type:"text"},  
-        phone: {label: "Phone", type:"text"}, 
+        email: {label: "Email", type:"email"},  
+        phone: {label: "Phone [000-000-0000]", type:"tel", pattern:"[0-9]{3}-[0-9]{3}-[0-9]{4}"}, 
         resume: {label: "Resume", type:"file"}, 
         profile_image: {label: "Profile Pic", type:"file"}
     },
@@ -21,7 +21,7 @@ const LABELS = {
     },
     websites: {
         id: {hide: true},
-        link: {label: "Link", type:"text"},
+        link: {label: "Link [http://www.linkedin.com]", type:"url"},
     },
     skills: {
         id: {hide: true},
@@ -31,7 +31,7 @@ const LABELS = {
     projects: {
         id: {hide: true},
         title: {label:  "Project Title", type:"text"}, 
-        link: {label: "Link", type:"text"},
+        link: {label: "Link [http://www.linkedin.com]", type:"url"},
     },
     work_experiences: {
         id: {hide: true},

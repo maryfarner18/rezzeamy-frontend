@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import About from '../components/Profile/About'
-import Contact from '../components/Profile/Contact'
 import Education from '../components/Profile/Education'
 import Skills from '../components/Profile/Skills'
 import Projects from '../components/Profile/Projects'
@@ -41,7 +40,7 @@ class Profile extends Component {
     }
 
     renderAboutComponent = () => {
-        return <About showUser={this.props.showUser.user} />
+        return <About showUser={this.props.showUser.user} sites={this.props.showUser.websites} address={this.props.showUser.addresses[0]} />
     }
 
     renderWorkExperienceComponent = () => {
@@ -60,15 +59,8 @@ class Profile extends Component {
         return <Projects projects={this.props.showUser.projects} />
     }
 
-    renderContactComponent = () => {
-        return <Contact 
-                    resources={this.props.showUser.websites} 
-                    addresses={this.props.showUser.addresses}
-                />
-    }
-
     renderChildComponents = () => {
-        console.log('Profile props: ', this.props)
+
         return (
             <div style={{textAlign: 'center'}}>
                 {this.renderAboutComponent()}
@@ -76,7 +68,6 @@ class Profile extends Component {
                 {this.renderSkillsComponent()}
                 {this.renderEducationComponent()}
                 {this.renderProjectsComponent()}
-                {this.renderContactComponent()}
                 {this.renderEditButton()}
             </div>
         )
@@ -87,9 +78,12 @@ class Profile extends Component {
     }
 
     render() {
-        console.log("in profile, props are ", this.props)
         return (
-            this.renderComponents()
+            <React.Fragment>
+                {this.renderComponents()}
+                <hr></hr>
+            </React.Fragment>
+            
         )
     }
 }

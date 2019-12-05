@@ -8,25 +8,26 @@ const FormPart = (props) =>{
         return keys.map( thisKey => {
             if (props.labels[thisKey].hide) return <Fragment key={thisKey}/>
         
-            const {label, type} = props.labels[thisKey]
+            const {label, type, pattern} = props.labels[thisKey]
 
-            let returnJsx = ''
             if (type === 'file') {
                 return <Form.Field key={thisKey}>
-                        <label>{label}</label>
+                         <label>{label}</label> 
                         <input onChange={handleFileChange}  
-                            // value={props.info[thisKey]} 
                             name={thisKey}
                             type={type}
+                            disabled
                             />
                         </Form.Field>
             } else {
                 return <Form.Field key={thisKey}>
-                        <label>{label}</label>
+                       
                         <input onChange={handleChange}  
                             value={props.info[thisKey]} 
                             name={thisKey}
                             type={type}
+                            placeholder={label}
+                            pattern = {pattern}
                             />
                         </Form.Field>
                

@@ -13,14 +13,11 @@ class Main extends Component {
     }
 
     renderForm = () =>{
-        console.log("here we are, about to got into Form Container...and we have ", this.props)
         if(!!this.props.currentUser.user) return <FormContainer step={8} currentUser={this.props.currentUser} setUser={this.props.setUser}/> 
-        console.log("ya gere  ", this.props.currentUser.user)
         return <FormContainer nextStep={this.props.nextStep} step={this.props.step} currentUser={this.props.currentUser} setUser={this.props.setUser}/>
     }
 
     renderProfile= (routerProps) =>{
-        console.log("router props", routerProps)
       
         if(routerProps.match.path === "/edit") return <ProfileContainer edit={true} userslug={routerProps.match.params.userslug} />
         
@@ -38,9 +35,9 @@ class Main extends Component {
     }
 
     render() {
-        console.log("n main, step is", this.props.step)
+
         return (
-            <div>
+            <div className="main">
                 <Switch>
                     <Route exact path="/setup" render={this.renderForm}/>
                     <Route exact path="/" render={this.renderLanding }/>

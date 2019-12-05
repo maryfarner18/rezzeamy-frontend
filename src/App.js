@@ -3,6 +3,7 @@ import  {withRouter} from 'react-router-dom'
 
 import Main from './containers/Main'
 import Nav from './containers/Nav'
+import Footer from './containers/Footer'
 
 export const API = 'http://localhost:3000'
 
@@ -14,7 +15,6 @@ class App extends React.Component {
   }
 
   nextStep = (newStep) => {
-    console.log("setting step to ", newStep)
     this.setState({
       step: newStep
     })
@@ -45,7 +45,7 @@ class App extends React.Component {
       })
       .then(res => res.json())
       .then(json => {
-        console.log("JSON response: ", json)
+      
         if (json.errors) {
           alert(json.errors)
         } else {
@@ -57,9 +57,9 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("in app state = ", this.state)
+    
     return (
-      <div>
+      <div className="app">
         <Nav 
         currentUser={this.state.currentUser} 
         setUser={this.setUser} 
@@ -69,6 +69,7 @@ class App extends React.Component {
         step={this.state.step} 
         currentUser={this.state.currentUser} 
         setUser={this.setUser} />
+        <Footer/>
       </div>
     );
   }

@@ -79,7 +79,7 @@ export default class EditForm extends Component {
     }
 
     render() {
-        console.log(this.state)
+
         return (
             <Form onSubmit={this.handleSubmit} style={{margin: 10}} >
                 <Form.Field>
@@ -155,7 +155,6 @@ export default class EditForm extends Component {
                                 <Form.Input fluid label='Title' placeholder='Title' name='title' value={project.title} onChange={(event) => this.handleProjectChange(event, project)} />
                                 <Form.Input fluid label='Description' placeholder='Description' name='description' value={project.description} onChange={(event) => this.handleProjectChange(event, project)} />
                                 <Form.Input fluid label='Link' placeholder='Link' name='link' value={project.link} onChange={(event) => this.handleProjectChange(event, project)} />
-                                <Form.Input fluid label='Image' placeholder='Image' name='image' value={project.image} onChange={(event) => this.handleProjectChange(event, project)} />
                             </Form.Group>
                         </React.Fragment>
                     )

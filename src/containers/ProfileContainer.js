@@ -3,7 +3,7 @@ import Profile from '../components/Profile';
 import {FIELD_OBJ} from './FormData'
 import {API} from '../App'
 import {Redirect, withRouter} from 'react-router-dom'
-import {Dimmer, Segment, Image, Loader} from 'semantic-ui-react'
+import {Dimmer, Segment, Loader} from 'semantic-ui-react'
 
 class ProfileContainer extends Component {
 
@@ -21,7 +21,7 @@ class ProfileContainer extends Component {
     }
     
     submitEdit = (event) => {
-        console.log('Submitting...', event)
+
         this.setState({
             showUser: {...event},
         }, () => this.submitPatch(event))
@@ -38,13 +38,13 @@ class ProfileContainer extends Component {
         })
         .then(resp => resp.json())
         .then(data => {
-            return <Redirect to="/"/>
+            this.props.history.push('/')
         })
         .catch(err => console.log(err))
     }
 
     componentDidMount() {
-        console.log("HERE, fetching to get", this.props.userslug)
+
         fetch(`${API}/users/${this.props.userslug}`)
         .then(resp => resp.json())
         .then(json => {
@@ -59,7 +59,6 @@ class ProfileContainer extends Component {
             
         })
         .catch(error => {
-            console.log('errors fetching that user to show:', error)
             return <Redirect to="404"/>
         })
     }
@@ -79,8 +78,6 @@ class ProfileContainer extends Component {
     }
 
     render() {
-        console.log(this.state)
-        console.log('Profile Container Props: ', this.props)
         return (
             this.state.loading ?  this.renderLoading() : <Profile showUser={this.state.showUser} edit={this.props.edit} submitEdit={this.submitEdit} currentUser={this.props.currentUser} />
         )
