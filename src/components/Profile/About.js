@@ -1,10 +1,15 @@
 import React from 'react'
 import { Container, Header } from 'semantic-ui-react'
+import Websites from './Websites'
 
 const About = (props) => {
 
+    const getCityState = (address) =>{
+        return `${address.city}, ${address.state}`
+    }
+
     const fullName = `${props.showUser.first_name} ${props.showUser.last_name}`
-    const {phone, email } = props.showUser
+    const {phone, email} = props.showUser
     return (
         <Container text>
             <Header
@@ -32,9 +37,20 @@ const About = (props) => {
                     fontSize: '20px',
                     fontWeight: 'normal',
                     margin: 0,
-                    marginBottom: 100
+                    marginBottom: 10
                 }}
             />
+            <Header
+                as='h4'
+                content={getCityState(props.address)}
+                style={{
+                    fontSize: '16px',
+                    fontWeight: 'normal',
+                    margin: 0,
+                    marginBottom: 30
+                }}
+            />
+            <Websites sites={props.sites}/>
         </Container>
     )
 }

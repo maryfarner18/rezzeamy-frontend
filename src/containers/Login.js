@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 
 import { Form, Button } from 'semantic-ui-react'
 import {API} from '../App'
@@ -40,7 +39,7 @@ export class Login extends Component {
     .then( res => res.json() )
     .then( json => {
         if(json.data) {
-          console.log(json)
+
             this.props.setUser(json.data)
             // No need to redirect here, this will conditonally re-render home
         } else {
@@ -89,10 +88,6 @@ export class Login extends Component {
           <Button type="submit">
             Log In
           </Button>          
-          <div>
-            or <Link to='/signup'>sign up</Link>
-          </div>
-          
          </Form>
          <div>
              {

@@ -11,10 +11,9 @@ const Projects = (props) => {
             {props.projects.map(project => {
                 return (
                     <div style={{marginBottom: 50}} key={project.id}>
-                        <Header as='h3'>{project.title}</Header>
+                        <Header as='h3'><a target="_blank" rel="noopener noreferrer" href={project.link}>{project.title}</a></Header>
                         <p>{project.description}</p>
-                        <p>{project.link}</p>
-                        <img src={project.image} alt="Project" />
+                        
                     </div>
                 )
             })}

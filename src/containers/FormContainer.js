@@ -1,13 +1,13 @@
 import React, {Component } from 'react'
+import $ from 'jquery';
+import {Step, Segment} from 'semantic-ui-react'
 
 import FormBar from '../components/FormParts/FormBar'
 import SuccessForm from '../components/FormParts/SuccessForm'
 import FormPart from '../components/FormParts/FormPart'
 
-import {Step, Segment, Grid} from 'semantic-ui-react'
-import {API} from '../App'
-import $ from 'jquery';
 import {FIELD_OBJ, LABELS} from './FormData'
+import {API} from '../App'
 
 class FormContainer extends Component {
     state = {
@@ -28,7 +28,6 @@ class FormContainer extends Component {
     }
 
     submitForm = () => {
-        console.log("submitting.......")
         this.setState({
             form: {
                 ...this.state.form,
@@ -48,12 +47,11 @@ class FormContainer extends Component {
             })
             .then(resp => resp.json())   
            .then(json => {
-              console.log(json)
+
               if(json.data) {
-                console.log(json)
-                console.log("setting user")
+      
                 this.props.setUser(json.data)
-                console.log("go to next step")
+   
                 this.nextStep()
                 
                 // No need to redirect here, this will conditonally re-render home
@@ -68,12 +66,11 @@ class FormContainer extends Component {
               
                 let userId = json.data.user.id
                 const {profile_image, resume} = this.state.form.user
-                console.log(profile_image, resume)
+       
                 if (profile_image && resume) {
                     let formData = new FormData()
                     formData.append("profile_image", profile_image, `Profile${userId}Image.jpg`)
                     formData.append("resume", resume, `Resume${userId}.pdf`)
-                    console.dir(formData)
     
                     fetch(`${API}/users/${userId}/files`, {
                         method: "POST",
@@ -162,10 +159,10 @@ class FormContainer extends Component {
 
     renderForm = () => {
         const {user, addresses, educations, work_experiences, skills, projects, websites} = this.state.form
-        console.log("at render form switch ", this.props)
+
         switch (this.props.step){
             case 1:
-                return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleFileChange={this.handleFileChange} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
+                return <FormPart formType="user" info={user} labels={LABELS.user} nextStep={this.nextStep} handleFileChange={this.handleFileChange} handleChange={this.handleChange}/>
                 
             case 2:
                 return <FormPart formType="addresses" info={addresses[addresses.length -1 ]} labels={LABELS.addresses} nextStep={this.nextStep} prevStep={this.prevStep} handleChange={this.handleChange} handleFileChange={this.handleFileChange}/>
@@ -195,10 +192,10 @@ class FormContainer extends Component {
     }
 
     render() {    
-        console.log("in form container step = ", this.props)   
         return (
-            <Grid textAlign='center' style={{ maxheight: '100vh' }} verticalAlign='top'>
-                <Grid.Column textAlign='left' style={{ maxWidth: 1024 }}>
+           // <Grid textAlign='center' style={{ maxheight: '100vh' }} verticalAlign='top'>
+           //     <Grid.Column textAlign='left'>
+           <div>
                     <Step.Group attached="top" widths={7} 
                     size='mini'>
                         <FormBar/>
@@ -207,9 +204,10 @@ class FormContainer extends Component {
                     <Segment attached>
                         {this.renderForm()}
                     </Segment>
+            </div>
 
-                </Grid.Column>
-            </Grid>
+         //       </Grid.Column>
+         //   </Grid>
         )
 
     }

@@ -13,3 +13,27 @@ code {
 }
 
 
+.app {
+  display: flex;
+  flex-direction: column; 
+  justify-content: flex-start;
+  /* flex-wrap: wrap; */
+  min-height: 100vh;
+  align-items: center;
+}
+
+.app > * {
+  width: 80%;
+  flex: 1;
+}
+
+.app:last-child {
+   align-self: flex-end;
+   flex: 0;
+  
+}
+
+footer h3{
+    width: 100%;
+    text-align: center;
+ }
