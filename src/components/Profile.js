@@ -8,15 +8,27 @@ import EditForm from '../components/Profile/EditForm';
 import { Button, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
+import {API} from '../App'
+
 class Profile extends Component {
   handleEditButtonClick = () => {
     this.props.history.push('/edit');
   };
 
-  // handleEdit = (event) => {
-  //     this.props.submitEdit(event)
-
-  // }
+  handleDeleteButtonClick = () =>{
+      fetch(`${API}/users/${this.props.currentUser.user.id}`, {
+          method: "DELETE",
+          headers: {
+              'content-type': "application/json",
+              "accepts": "application/json"
+          }
+      })
+      .then(resp => resp.json())
+      .then(data => {
+          this.props.setUser({})
+          this.props.history.push("/")
+      }).catch(console.log)
+  }
 
   renderEditForm = () => {
     return (
@@ -24,17 +36,25 @@ class Profile extends Component {
     );
   };
 
-  renderEditButton = () => {
+  renderEditDeleteButton = () => {
     return this.props.currentUser.user &&
       this.props.currentUser.user.user_slug ===
         this.props.showUser.user.user_slug ? (
-      <Button animated="vertical" onClick={this.handleEditButtonClick}>
-        <Button.Content hidden>Edit</Button.Content>
-        <Button.Content visible>
-          <Icon name="edit" />
-        </Button.Content>
-      </Button>
-    ) : null;
+            <React.Fragment>
+                <Button animated="vertical" onClick={this.handleEditButtonClick}>
+                    <Button.Content hidden>Edit</Button.Content>
+                    <Button.Content visible>
+                    <Icon name="edit" />
+                    </Button.Content>
+                </Button>
+                <Button animated="vertical" onClick={this.handleDeleteButtonClick}>
+                    <Button.Content hidden>Delete</Button.Content>
+                    <Button.Content visible>
+                        <Icon name="delete" />
+                    </Button.Content>
+                </Button>
+            </React.Fragment>) 
+        : null;
   };
 
   renderAboutComponent = () => {
@@ -71,7 +91,7 @@ class Profile extends Component {
         {this.renderSkillsComponent()}
         {this.renderEducationComponent()}
         {this.renderProjectsComponent()}
-        {this.renderEditButton()}
+        {this.renderEditDeleteButton()}
       </div>
     );
   };

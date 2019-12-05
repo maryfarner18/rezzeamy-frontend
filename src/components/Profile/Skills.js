@@ -5,10 +5,10 @@ const Skills = (props) => {
 
     const renderRows = () => {
         let arr = []
-        for(let i = 0; i< Math.ceil(props.skills.length / 6); i++){
+        for(let i = 0; i< Math.ceil(props.skills.length / 4); i++){
             arr.push(
-            <Grid.Row key={i} columns={Math.min(6, (props.skills.length - 6) * (i+1))}>
-                {renderRow(props.skills.slice(i*6, ((i+1)*6)))}
+            <Grid.Row key={i} columns={4}>
+                {renderRow(props.skills.slice(i*4, ((i+1)*4)))}
             </Grid.Row>)
         }
         return arr
@@ -43,5 +43,6 @@ const Skills = (props) => {
             </Grid>
         </React.Fragment>
     )
+}
 
 export default Skills;

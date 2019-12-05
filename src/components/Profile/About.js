@@ -3,8 +3,13 @@ import { Container, Header } from 'semantic-ui-react';
 import Websites from './Websites';
 
 const About = props => {
+
   const getCityState = address => {
-    return `${address.city}, ${address.state}`;
+    if(address.state && address.city ){
+      return `${address.city}, ${address.state}`;
+    }else {
+      return `${address.city}${address.state}`;
+    }
   };
 
   const fullName = `${props.showUser.first_name} ${props.showUser.last_name}`;

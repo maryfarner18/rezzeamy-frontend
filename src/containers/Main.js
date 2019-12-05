@@ -34,6 +34,7 @@ class Main extends Component {
         <ProfileContainer
           edit={true}
           userslug={routerProps.match.params.userslug}
+          setUser={this.props.setUser}
         />
       );
 
@@ -42,6 +43,7 @@ class Main extends Component {
         edit={false}
         userslug={routerProps.match.params.userslug}
         currentUser={this.props.currentUser}
+        setUser={this.props.setUser}
       />
     );
   };

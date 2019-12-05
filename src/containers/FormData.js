@@ -34,6 +34,7 @@ const LABELS = {
   projects: {
     id: { hide: true },
     title: { label: 'Project Title', type: 'text' },
+    description: {label: 'Description', type: 'text'},
     link: { label: 'Link [http://www.linkedin.com]', type: 'url' },
   },
   work_experiences: {
@@ -79,7 +80,7 @@ const FIELD_OBJ = {
   },
   websites: { id: '', link: '' },
   skills: { id: '', name: '', proficiency: '' },
-  projects: { id: '', title: '', link: '' },
+  projects: { id: '', title: '', link: '', description: '' },
   work_experiences: {
     id: '',
     company: '',
