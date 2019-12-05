@@ -1,5 +1,5 @@
-import React from 'react'
-import { Divider, Header, Grid, Card } from 'semantic-ui-react'
+import React from 'react';
+import { Divider, Header, Grid, Card } from 'semantic-ui-react';
 
 const Skills = (props) => {
 
@@ -44,6 +44,4 @@ const Skills = (props) => {
         </React.Fragment>
     )
 
-}
-
-export default Skills
+export default Skills;
