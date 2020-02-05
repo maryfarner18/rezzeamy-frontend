@@ -5,7 +5,7 @@ import Main from './containers/Main';
 import Nav from './containers/Nav';
 import Footer from './containers/Footer';
 
-export const API = 'dry-hamlet-20899.herokuapp.com';
+export const API = 'https://dry-hamlet-20899.herokuapp.com';
  
 class App extends React.Component {
   state = {
