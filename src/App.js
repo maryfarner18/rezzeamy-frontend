@@ -5,21 +5,21 @@ import Main from './containers/Main';
 import Nav from './containers/Nav';
 import Footer from './containers/Footer';
 
-export const API = 'https://dry-hamlet-20899.herokuapp.com';
- 
+export const API = 'http://localhost:3000';
+
 class App extends React.Component {
   state = {
     step: 1,
     currentUser: {},
   };
 
-  nextStep = newStep => {
+  nextStep = (newStep) => {
     this.setState({
       step: newStep,
     });
   };
 
-  setUser = data => {
+  setUser = (data) => {
     this.setState(
       {
         currentUser: { ...data },
@@ -28,7 +28,6 @@ class App extends React.Component {
         if (!!data.user) {
           localStorage.user_id = data.user.id;
         } else {
- 
           localStorage.removeItem('user_id');
         }
       },
@@ -44,15 +43,15 @@ class App extends React.Component {
           Authorization: user_id,
         },
       })
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           if (json.errors) {
             alert(json.errors);
           } else {
             this.setUser(json.data);
           }
         })
-        .catch(err => console.log('errors: ', err));
+        .catch((err) => console.log('errors: ', err));
     }
   }
 
